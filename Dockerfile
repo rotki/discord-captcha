@@ -19,13 +19,15 @@ ENV NITRO_HOST=0.0.0.0
 ENV NITRO_PORT=4000
 
 RUN --mount=type=cache,target=/root/.npm/_cacache/ \
-    npm install -g pm2@5.3.0
+    npm install -g pm2@5.3.0 && \
+    mkdir data
 
 COPY --from=builder /build/.output ./.output/
 COPY --from=builder /build/ecosystem.config.cjs ./
 COPY --from=builder /build/package.json ./
 
 EXPOSE ${NITRO_PORT}
+VOLUME /app/data
 
 CMD ["pm2-runtime", "ecosystem.config.cjs"]
 HEALTHCHECK --start-period=30s --retries=2 \

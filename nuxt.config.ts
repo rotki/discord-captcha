@@ -17,6 +17,11 @@ export default defineNuxtConfig({
     lazy: true,
     vueI18n: './i18n.config.ts',
   },
+  vite: {
+    optimizeDeps: {
+      exclude: ['fsevents', 'zlib-sync'],
+    },
+  },
   runtimeConfig: {
     recaptchaSecret: '',
     discord: {
@@ -25,6 +30,7 @@ export default defineNuxtConfig({
       publicKey: '',
       guildId: 0,
       channelId: 0,
+      roleId: 0,
     },
     public: {
       siteUrl: '',
