@@ -2,6 +2,7 @@ import { REST } from '@discordjs/rest';
 import { WebSocketManager } from '@discordjs/ws';
 import { Client, GatewayIntentBits } from '@discordjs/core';
 import { InviteMonitor } from '~/services/invite_monitor';
+import { Commands } from '~/services/commands';
 
 export default defineNuxtPlugin({
   name: 'discord',
@@ -27,7 +28,13 @@ export default defineNuxtPlugin({
       guildId: config.guildId.toString(),
       roleId: config.roleId.toString(),
     });
+    const commands = new Commands(client, rest, {
+      appId: config.appId,
+      guildId: config.guildId.toString(),
+    });
+
     monitor.setupListeners();
+    await commands.register();
     await gateway.connect();
 
     return {
