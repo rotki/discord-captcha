@@ -1,16 +1,14 @@
 import {
   type Client,
   GatewayDispatchEvents,
-  type WithIntrinsicProps,
-} from '@discordjs/core';
-import consola from 'consola';
-import { promiseTimeout } from '@vueuse/shared/index';
-import {
   type GatewayGuildMemberAddDispatchData,
   type GatewayInviteCreateDispatchData,
   type GatewayInviteDeleteDispatchData,
   type GatewayReadyDispatchData,
-} from 'discord-api-types/gateway/v10';
+  type WithIntrinsicProps,
+} from '@discordjs/core';
+import consola from 'consola';
+import { promiseTimeout } from '@vueuse/shared/index';
 import { toCachedInvite, toCachedUser } from '~/utils/invites';
 import { type CachedInviteData, type CachedUser } from '~/types/invites';
 import { InviteRepository } from '~/repository/invite_repository';
