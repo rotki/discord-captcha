@@ -85,6 +85,7 @@ export default defineNuxtConfig({
       recaptcha: {
         siteKey: '',
       },
+      logLevel: 3, // defaults at info level
     },
   },
 });

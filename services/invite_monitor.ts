@@ -7,11 +7,11 @@ import {
   type GatewayReadyDispatchData,
   type WithIntrinsicProps,
 } from '@discordjs/core';
-import consola from 'consola';
 import { promiseTimeout } from '@vueuse/shared';
 import { toCachedInvite, toCachedUser } from '~/utils/invites';
 import { type CachedInviteData, type CachedUser } from '~/types/invites';
 import { InviteRepository } from '~/repository/invite_repository';
+import { logger } from '~/utils/logger';
 
 export class InviteMonitor {
   private botUser: CachedUser = {
@@ -44,7 +44,7 @@ export class InviteMonitor {
     api,
     data,
   }: WithIntrinsicProps<GatewayReadyDispatchData>) {
-    consola.info('Gateway connection ready');
+    logger.info('Gateway connection ready');
     await promiseTimeout(1000);
     const guildInvites = await api.guilds.getInvites(this.config.guildId);
 
@@ -54,7 +54,7 @@ export class InviteMonitor {
 
     this.botUser = toCachedUser(data.user);
 
-    consola.debug(
+    logger.debug(
       `${this.botUser.username}: found ${guildInvites.length} known invites to monitor`,
     );
   }
@@ -64,15 +64,13 @@ export class InviteMonitor {
   ) {
     const user = payload.data.user;
     if (!user) {
-      consola.info('Missing user information, bailing.');
+      logger.info('Missing user information, bailing.');
       return;
     }
     const guildId = payload.data.guild_id;
     const member: CachedUser = toCachedUser(user);
 
-    consola.debug(
-      `A new user with id ${member.id} (${member.username}) joined`,
-    );
+    logger.debug(`A new user with id ${member.id} (${member.username}) joined`);
 
     const apiInvites = await payload.api.guilds.getInvites(guildId);
     const invites: Record<string, CachedInviteData> = {};
@@ -89,7 +87,7 @@ export class InviteMonitor {
 
       if (invite.uses > data.uses && invite.inviter?.id !== this.botUser.id) {
         await this.repository.set({ code, data: invite });
-        consola.debug(
+        logger.debug(
           `Invite id ${code} was used, that is not guaranteed to have a captcha, bailing`,
         );
         return;
@@ -97,7 +95,7 @@ export class InviteMonitor {
     }
 
     const roleId = this.config.roleId;
-    consola.debug(
+    logger.debug(
       `User ${member.username} joined, preparing to add role ${roleId}`,
     );
     await payload.api.guilds.addRoleToMember(guildId, member.id, roleId);
@@ -106,9 +104,7 @@ export class InviteMonitor {
   private async onInviteCreated({
     data,
   }: WithIntrinsicProps<GatewayInviteCreateDispatchData>) {
-    consola.info(
-      `Invite ${data.code} was created by ${data.inviter?.username}`,
-    );
+    logger.info(`Invite ${data.code} was created by ${data.inviter?.username}`);
 
     await this.repository.set(toCachedInvite(data));
   }
@@ -116,7 +112,7 @@ export class InviteMonitor {
   private async onInviteDeleted({
     data,
   }: WithIntrinsicProps<GatewayInviteDeleteDispatchData>) {
-    consola.info(`Invite ${data.code} was deleted`);
+    logger.info(`Invite ${data.code} was deleted`);
     await this.repository.delete(data.code);
   }
 }
