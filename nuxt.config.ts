@@ -76,6 +76,10 @@ export default defineNuxtConfig({
       channelId: 0,
       roleId: 0,
     },
+    redis: {
+      host: '',
+      password: '',
+    },
     public: {
       siteUrl: '',
       recaptcha: {
