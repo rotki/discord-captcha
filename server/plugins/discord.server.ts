@@ -1,13 +1,13 @@
 import { REST } from '@discordjs/rest';
 import { WebSocketManager } from '@discordjs/ws';
 import { Client, GatewayIntentBits } from '@discordjs/core';
-import consola from 'consola';
 import { InviteMonitor } from '~/services/invite_monitor';
 import { Commands } from '~/services/commands';
+import { logger } from '~/utils/logger';
 
 export default defineNitroPlugin(async () => {
   if (process.env.BUILD) {
-    consola.info('Skipping plugin run due to BUILD mode');
+    logger.info('Skipping plugin run due to BUILD mode');
     return;
   }
   const { discord: config } = useRuntimeConfig();
@@ -15,7 +15,7 @@ export default defineNitroPlugin(async () => {
   const guildId = config.guildId.toString();
   const roleId = config.roleId.toString();
 
-  consola.info('Initializing bot gateway connection');
+  logger.info('Initializing bot gateway connection');
 
   const rest = new REST({ version: '10' }).setToken(token);
 

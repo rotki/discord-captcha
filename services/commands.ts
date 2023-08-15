@@ -6,9 +6,9 @@ import {
   InteractionType,
   type WithIntrinsicProps,
 } from '@discordjs/core';
-import consola from 'consola';
 import { type REST } from '@discordjs/rest';
 import { commands } from '~/services/botcommands';
+import { logger } from '~/utils/logger';
 
 export class Commands {
   constructor(
@@ -27,7 +27,7 @@ export class Commands {
         command.data,
       );
     }
-    consola.info(`Registered ${commands.length} commands`);
+    logger.info(`Registered ${commands.length} commands`);
 
     this.client.on(GatewayDispatchEvents.InteractionCreate, (payload) =>
       this.onInteractionCreate(payload),
@@ -39,7 +39,7 @@ export class Commands {
     api,
   }: WithIntrinsicProps<APIInteraction>) {
     if (interaction.type !== InteractionType.ApplicationCommand) {
-      consola.debug('Received interaction was not a command');
+      logger.debug('Received interaction was not a command');
       return;
     }
 
@@ -49,7 +49,7 @@ export class Commands {
     if (currentCommand) {
       await currentCommand.execute(interaction, api);
     } else {
-      consola.debug(`Command ${interaction.data.name} is unknown`);
+      logger.debug(`Command ${interaction.data.name} is unknown`);
     }
   }
 }
