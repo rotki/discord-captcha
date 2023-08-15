@@ -5,7 +5,7 @@
   "packageManager": "pnpm@8.6.11",
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
+    "build": "BUILD=true nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
