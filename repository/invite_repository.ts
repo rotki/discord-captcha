@@ -1,13 +1,29 @@
-import { type Storage, createStorage } from 'unstorage';
+import { type Driver, type Storage, createStorage } from 'unstorage';
 import fsDriver from 'unstorage/drivers/fs';
+import redisDriver from 'unstorage/drivers/redis';
+import consola from 'consola';
 import { type CachedInvite, type CachedInviteData } from '~/types/invites';
 
 export class InviteRepository {
   private readonly storage: Storage<CachedInviteData>;
 
   constructor() {
+    const { redis } = useRuntimeConfig();
+
+    let driver: Driver;
+    if (redis.host && redis.password) {
+      consola.info('Using unstorage redis driver');
+      driver = redisDriver({
+        base: 'discord_invites',
+        host: redis.host,
+        password: redis.password,
+      });
+    } else {
+      consola.info('Using unstorage fs driver');
+      driver = fsDriver({ base: './data/invites' });
+    }
     this.storage = createStorage({
-      driver: fsDriver({ base: './data/invites' }),
+      driver,
     });
   }
 
