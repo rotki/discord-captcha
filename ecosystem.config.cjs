@@ -5,7 +5,7 @@ module.exports = {
       script: './.output/server/index.mjs',
       args: 'start',
       exec_mode: 'cluster',
-      instances: 'max',
+      instances: '1',
     },
   ],
 };
