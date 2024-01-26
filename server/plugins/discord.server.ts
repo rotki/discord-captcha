@@ -1,11 +1,13 @@
+import process from 'node:process';
 import { REST } from '@discordjs/rest';
 import { WebSocketManager } from '@discordjs/ws';
 import { Client, GatewayIntentBits } from '@discordjs/core';
-import { InviteMonitor } from '~/services/invite_monitor';
+import { InviteMonitor } from '~/services/invite-monitor';
 import { Commands } from '~/services/commands';
 import { logger } from '~/utils/logger';
+import { consume } from '~/utils/promise';
 
-export default defineNitroPlugin(async () => {
+async function initPlugin() {
   if (process.env.BUILD) {
     logger.info('Skipping plugin run due to BUILD mode');
     return;
@@ -20,20 +22,20 @@ export default defineNitroPlugin(async () => {
   const rest = new REST({ version: '10' }).setToken(token);
 
   const gateway = new WebSocketManager({
-    token,
     intents:
-      GatewayIntentBits.Guilds |
-      GatewayIntentBits.GuildInvites |
-      GatewayIntentBits.GuildMembers,
+      GatewayIntentBits.Guilds
+      | GatewayIntentBits.GuildInvites
+      | GatewayIntentBits.GuildMembers,
     rest,
+    token,
   });
 
-  const client = new Client({ rest, gateway });
+  const client = new Client({ gateway, rest });
 
   const monitor = new InviteMonitor(client, {
-    token,
     guildId,
     roleId,
+    token,
   });
   const commands = new Commands(client, rest, {
     appId: config.appId,
@@ -43,4 +45,6 @@ export default defineNitroPlugin(async () => {
   monitor.setupListeners();
   await commands.register();
   await gateway.connect();
-});
+}
+
+export default defineNitroPlugin(() => consume(initPlugin()));

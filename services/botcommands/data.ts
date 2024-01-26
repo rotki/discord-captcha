@@ -1,9 +1,9 @@
-import { type API, type APIInteraction } from '@discordjs/core';
+import type { API, APIInteraction } from '@discordjs/core';
 
 export const dataDirCommand = {
   data: {
-    name: 'datadir',
     description: 'Links to the documentation for the data directory location',
+    name: 'datadir',
   },
   async execute(interaction: APIInteraction, api: API) {
     await api.interactions.reply(interaction.id, interaction.token, {

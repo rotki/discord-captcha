@@ -6,9 +6,10 @@ import {
   InteractionType,
   type WithIntrinsicProps,
 } from '@discordjs/core';
-import { type REST } from '@discordjs/rest';
 import { commands } from '~/services/botcommands';
 import { logger } from '~/utils/logger';
+import { consume } from '~/utils/promise';
+import type { REST } from '@discordjs/rest';
 
 export class Commands {
   constructor(
@@ -29,14 +30,15 @@ export class Commands {
     }
     logger.info(`Registered ${commands.length} commands`);
 
-    this.client.on(GatewayDispatchEvents.InteractionCreate, (payload) =>
-      this.onInteractionCreate(payload),
+    this.client.on(
+      GatewayDispatchEvents.InteractionCreate,
+      payload => consume(this.onInteractionCreate(payload)),
     );
   }
 
   private async onInteractionCreate({
-    data: interaction,
     api,
+    data: interaction,
   }: WithIntrinsicProps<APIInteraction>) {
     if (interaction.type !== InteractionType.ApplicationCommand) {
       logger.debug('Received interaction was not a command');
@@ -44,12 +46,11 @@ export class Commands {
     }
 
     const currentCommand = commands.find(
-      (x) => x.data.name === interaction.data.name,
+      x => x.data.name === interaction.data.name,
     );
-    if (currentCommand) {
+    if (currentCommand)
       await currentCommand.execute(interaction, api);
-    } else {
+    else
       logger.debug(`Command ${interaction.data.name} is unknown`);
-    }
   }
 }

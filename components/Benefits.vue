@@ -48,7 +48,9 @@ const benefits = computed<BenefitDetails[]>(() => [
       class="text-primary py-[5rem] flex flex-col items-center self-stretch gap-[3rem]"
     >
       <div>
-        <div class="text-h4">{{ t('discord.benefits.title') }}</div>
+        <div class="text-h4">
+          {{ t('discord.benefits.title') }}
+        </div>
         <div class="text-body-1 mt-[1.25rem]">
           {{ t('discord.benefits.description') }}
         </div>

@@ -1,51 +1,58 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
   app: {
     head: {
-      title: 'discord.rotki.com',
       htmlAttrs: {
         lang: 'en',
       },
-      meta: [
-        { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'msapplication-TileColor', content: '#00aba9' },
-        { name: 'theme-color', content: '#ffffff' },
-      ],
       link: [
         {
-          rel: 'apple-touch-icon',
           href: '/apple-touch-icon.png',
+          rel: 'apple-touch-icon',
           sizes: '180x180',
         },
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { href: '/favicon.ico', rel: 'icon', type: 'image/x-icon' },
         {
-          rel: 'icon',
-          type: 'image/png',
           href: '/favicon-32x32.png',
-          sizes: '32x32',
-        },
-        {
           rel: 'icon',
+          sizes: '32x32',
           type: 'image/png',
+        },
+        {
           href: '/favicon-16x16.png',
+          rel: 'icon',
           sizes: '16x16',
+          type: 'image/png',
         },
         {
-          rel: 'manifest',
-          href: '/site.webmanifest',
           crossorigin: 'use-credentials',
+          href: '/site.webmanifest',
+          rel: 'manifest',
         },
         {
-          rel: 'mask-icon',
-          href: '/safari-pinned-tab.svg',
           color: '#5bbad5',
+          href: '/safari-pinned-tab.svg',
+          rel: 'mask-icon',
         },
       ],
+      meta: [
+        { charset: 'utf-8' },
+        { content: 'width=device-width, initial-scale=1', name: 'viewport' },
+        { content: '#00aba9', name: 'msapplication-TileColor' },
+        { content: '#ffffff', name: 'theme-color' },
+      ],
+      title: 'discord.rotki.com',
     },
   },
-  ssr: true,
+  devtools: { enabled: true },
+  i18n: {
+    defaultLocale: 'en',
+    langDir: 'locales',
+    lazy: true,
+    locales: [{ code: 'en', file: 'en.json', iso: 'en-US' }],
+    strategy: 'no_prefix',
+    vueI18n: './i18n.config.ts',
+  },
   modules: [
     '@nuxt/devtools',
     '@nuxtjs/i18n',
@@ -53,39 +60,32 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     './modules/ui-library/module.ts',
   ],
-  i18n: {
-    locales: [{ code: 'en', iso: 'en-US', file: 'en.json' }],
-    defaultLocale: 'en',
-    strategy: 'no_prefix',
-    langDir: 'locales',
-    lazy: true,
-    vueI18n: './i18n.config.ts',
-  },
-  vite: {
-    optimizeDeps: {
-      exclude: ['fsevents', 'zlib-sync'],
-    },
-  },
   runtimeConfig: {
-    recaptchaSecret: '',
     discord: {
       appId: '',
-      token: '',
-      publicKey: '',
-      guildId: 0,
       channelId: 0,
+      guildId: 0,
+      publicKey: '',
       roleId: 0,
+      token: '',
     },
+    public: {
+      logLevel: 3, // defaults at info level
+      recaptcha: {
+        siteKey: '',
+      },
+      siteUrl: '',
+    },
+    recaptchaSecret: '',
     redis: {
       host: '',
       password: '',
     },
-    public: {
-      siteUrl: '',
-      recaptcha: {
-        siteKey: '',
-      },
-      logLevel: 3, // defaults at info level
+  },
+  ssr: true,
+  vite: {
+    optimizeDeps: {
+      exclude: ['fsevents', 'zlib-sync'],
     },
   },
 });

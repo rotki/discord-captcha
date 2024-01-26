@@ -1,3 +1,5 @@
+import plugin from '@rotki/ui-library/theme';
+
 export default {
   content: [
     './components/**/*.{vue,js,ts}',
@@ -9,5 +11,5 @@ export default {
       center: true,
     },
   },
-  plugins: [require('@rotki/ui-library/theme')],
+  plugins: [plugin],
 };

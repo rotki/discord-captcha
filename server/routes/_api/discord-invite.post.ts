@@ -10,24 +10,24 @@ import { discordRequest } from '~/utils/discord';
 
 export default defineEventHandler(async (event) => {
   const {
+    discord: { channelId, token },
     recaptchaSecret,
-    discord: { token, channelId },
   } = useRuntimeConfig();
   const requestBody = await readBody(event);
   const body = DiscordInviteBody.parse(requestBody);
 
   const response = CaptchaVerification.parse(
     await $fetch('https://www.google.com/recaptcha/api/siteverify', {
-      method: 'POST',
+      body: new URLSearchParams(
+        Object.entries({
+          response: body.captcha,
+          secret: recaptchaSecret,
+        }),
+      ).toString(),
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: new URLSearchParams(
-        Object.entries({
-          secret: recaptchaSecret,
-          response: body.captcha,
-        }),
-      ).toString(),
+      method: 'POST',
     }),
   );
 
@@ -42,29 +42,30 @@ export default defineEventHandler(async (event) => {
     const discordResponse = await discordRequest<DiscordInvite>(
       `/channels/${channelId}/invites`,
       {
-        method: 'POST',
         // https://discord.com/developers/docs/resources/channel#create-channel-invite
         body: {
           max_age: 1800,
           max_uses: 1,
           unique: true,
         },
+        method: 'POST',
       },
       token,
     );
 
     return DiscordInviteResponse.parse(discordResponse);
-  } catch (e: any) {
-    if (e instanceof FetchError) {
+  }
+  catch (error: any) {
+    if (error instanceof FetchError) {
       throw createError({
-        statusCode: e.statusCode,
-        statusMessage: `Invite creation failed with: ${e.statusMessage}`,
+        statusCode: error.statusCode,
+        statusMessage: `Invite creation failed with: ${error.statusMessage}`,
       });
     }
 
     throw createError({
       statusCode: 500,
-      statusMessage: e.message,
+      statusMessage: error.message,
     });
   }
 });

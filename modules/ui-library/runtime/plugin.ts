@@ -15,7 +15,6 @@ import '@fontsource/roboto/latin.css';
 export default defineNuxtPlugin((nuxtApp) => {
   const rui = createRui({
     theme: {
-      mode: 'light',
       icons: [
         RiGithubLine,
         RiMailSendLine,
@@ -27,6 +26,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         RiNewspaperLine,
         RiWechatLine,
       ],
+      mode: 'light',
     },
   });
   nuxtApp.vueApp.use(rui);

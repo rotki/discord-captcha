@@ -4,7 +4,7 @@
 
 ### Create and configure
 
-Create a new [discord application](https://discord.com/developers/applications). 
+Create a new [discord application](https://discord.com/developers/applications).
 
 In the bot settings of your new application make sure to go under `Priviledged Gateway Intents`
 and enable `SERVER_MEMBERS_INTENT` and `MESSAGE_CONTENT_INTENT`.
@@ -12,6 +12,7 @@ and enable `SERVER_MEMBERS_INTENT` and `MESSAGE_CONTENT_INTENT`.
 ### Permissions
 
 Make sure the bot has the following permissions:
+
 - Manage Server
 - Manage Roles
 - Manage Channels
@@ -32,14 +33,14 @@ For the permissions use the permission calculator in the application bot setting
 
 ### Role Addition
 
-You should ensure that the added role is below the bot's role in the Guild's 
+You should ensure that the added role is below the bot's role in the Guild's
 roles settings.
 
-Otherwise, this might cause permission errors even if you have given the `MANAGE_ROLES` 
+Otherwise, this might cause permission errors even if you have given the `MANAGE_ROLES`
 permission to the bot.
 
-
 ## Development
+
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
 Make sure to install the dependencies:

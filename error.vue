@@ -20,9 +20,16 @@ useHead(() => ({
 
 <template>
   <div class="container">
-    <div v-if="error" :class="css.wrapper">
-      <h1 :class="css.title">{{ statusCode }}</h1>
-      <p :class="css.subtitle">{{ title }}</p>
+    <div
+      v-if="error"
+      :class="css.wrapper"
+    >
+      <h1 :class="css.title">
+        {{ statusCode }}
+      </h1>
+      <p :class="css.subtitle">
+        {{ title }}
+      </p>
 
       <div class="flex justify-center">
         <RuiButton

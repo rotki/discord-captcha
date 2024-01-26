@@ -1,5 +1,5 @@
-export type CachedUser = { username: string; id: string };
+export interface CachedUser { username: string; id: string }
 
-export type CachedInvite = { code: string; data: CachedInviteData };
+export interface CachedInvite { code: string; data: CachedInviteData }
 
-export type CachedInviteData = { uses: number; inviter?: CachedUser };
+export interface CachedInviteData { uses: number; inviter?: CachedUser }

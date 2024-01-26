@@ -1,8 +1,8 @@
 import { type Driver, type Storage, createStorage } from 'unstorage';
 import fsDriver from 'unstorage/drivers/fs';
 import redisDriver from 'unstorage/drivers/redis';
-import { type CachedInvite, type CachedInviteData } from '~/types/invites';
 import { logger } from '~/utils/logger';
+import type { CachedInvite, CachedInviteData } from '~/types/invites';
 
 export class InviteRepository {
   private readonly storage: Storage<CachedInviteData>;
@@ -18,7 +18,8 @@ export class InviteRepository {
         host: redis.host,
         password: redis.password,
       });
-    } else {
+    }
+    else {
       logger.info('Using unstorage fs driver');
       driver = fsDriver({ base: './data/invites' });
     }
@@ -39,9 +40,8 @@ export class InviteRepository {
     const keys = await this.storage.getKeys();
     for (const key of keys) {
       const value = await this.storage.getItem(key);
-      if (value) {
+      if (value)
         yield [key, value];
-      }
     }
   }
 }

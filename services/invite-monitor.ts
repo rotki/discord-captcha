@@ -9,15 +9,17 @@ import {
 } from '@discordjs/core';
 import { promiseTimeout } from '@vueuse/shared';
 import { toCachedInvite, toCachedUser } from '~/utils/invites';
-import { type CachedInviteData, type CachedUser } from '~/types/invites';
-import { InviteRepository } from '~/repository/invite_repository';
+import { InviteRepository } from '~/repository/invite-repository';
 import { logger } from '~/utils/logger';
+import { consume } from '~/utils/promise';
+import type { CachedInviteData, CachedUser } from '~/types/invites';
 
 export class InviteMonitor {
   private botUser: CachedUser = {
-    username: 'rotki',
     id: '',
+    username: 'rotki',
   };
+
   private readonly repository = new InviteRepository();
 
   constructor(
@@ -26,17 +28,21 @@ export class InviteMonitor {
   ) {}
 
   setupListeners() {
-    this.client.once(GatewayDispatchEvents.Ready, (payload) =>
-      this.onReady(payload),
+    this.client.once(
+      GatewayDispatchEvents.Ready,
+      payload => consume(this.onReady(payload)),
     );
-    this.client.on(GatewayDispatchEvents.GuildMemberAdd, (payload) =>
-      this.onJoin(payload),
+    this.client.on(
+      GatewayDispatchEvents.GuildMemberAdd,
+      payload => consume(this.onJoin(payload)),
     );
-    this.client.on(GatewayDispatchEvents.InviteCreate, (payload) =>
-      this.onInviteCreated(payload),
+    this.client.on(
+      GatewayDispatchEvents.InviteCreate,
+      payload => consume(this.onInviteCreated(payload)),
     );
-    this.client.on(GatewayDispatchEvents.InviteDelete, (payload) =>
-      this.onInviteDeleted(payload),
+    this.client.on(
+      GatewayDispatchEvents.InviteDelete,
+      payload => consume(this.onInviteDeleted(payload)),
     );
   }
 
@@ -48,9 +54,8 @@ export class InviteMonitor {
     await promiseTimeout(1000);
     const guildInvites = await api.guilds.getInvites(this.config.guildId);
 
-    for (const guildInvite of guildInvites) {
+    for (const guildInvite of guildInvites)
       await this.repository.set(toCachedInvite(guildInvite));
-    }
 
     this.botUser = toCachedUser(data.user);
 
@@ -81,9 +86,8 @@ export class InviteMonitor {
 
     for await (const [code, data] of this.repository.iterator()) {
       const invite = invites[code];
-      if (!invite) {
+      if (!invite)
         continue;
-      }
 
       if (invite.uses > data.uses && invite.inviter?.id !== this.botUser.id) {
         await this.repository.set({ code, data: invite });

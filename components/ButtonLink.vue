@@ -25,16 +25,15 @@ const attrs = useAttrs();
 
 const { highlightActive, highlightExactActive } = toRefs(props);
 
-const getColor = (active: boolean, exact: boolean) => {
+function getColor(active: boolean, exact: boolean) {
   if (
-    (get(highlightActive) && active) ||
-    (get(highlightExactActive) && exact)
-  ) {
+    (get(highlightActive) && active)
+    || (get(highlightExactActive) && exact)
+  )
     return 'primary';
-  }
 
   return undefined;
-};
+}
 </script>
 
 <template>

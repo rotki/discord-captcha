@@ -5,10 +5,10 @@ export const DiscordInviteBody = z.object({
 });
 
 export const CaptchaVerification = z.object({
-  success: z.boolean(),
-  challenge_ts: z.string().optional(),
-  hostname: z.string().optional(),
+  'challenge_ts': z.string().optional(),
   'error-codes': z.array(z.string()).optional(),
+  'hostname': z.string().optional(),
+  'success': z.boolean(),
 });
 
 export type CaptchaVerification = z.infer<typeof CaptchaVerification>;

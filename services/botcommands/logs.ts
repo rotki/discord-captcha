@@ -1,9 +1,9 @@
-import { type API, type APIInteraction } from '@discordjs/core';
+import type { API, APIInteraction } from '@discordjs/core';
 
 export const logsCommand = {
   data: {
-    name: 'logsdir',
     description: 'Links to the documentation for the log files location',
+    name: 'logsdir',
   },
   async execute(interaction: APIInteraction, api: API) {
     await api.interactions.reply(interaction.id, interaction.token, {
