@@ -19,7 +19,7 @@ ENV NITRO_HOST=0.0.0.0
 ENV NITRO_PORT=4000
 
 RUN --mount=type=cache,target=/root/.npm/_cacache/ \
-    npm install -g pm2@5.3.0 && \
+    npm install -g pm2@5.3.1 && \
     mkdir data
 
 COPY --from=builder /build/.output ./.output/
