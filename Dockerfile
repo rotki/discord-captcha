@@ -1,4 +1,4 @@
-FROM node:18 as builder
+FROM node:20 as builder
 
 COPY ./ /build/
 
@@ -10,7 +10,7 @@ RUN --mount=type=cache,target=/root/.npm/_cacache/ \
     pnpm install --frozen-lockfile && \
     pnpm run build
 
-FROM node:18-alpine as production
+FROM node:20-alpine as production
 
 WORKDIR /app
 ARG GIT_SHA
