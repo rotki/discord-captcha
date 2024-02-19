@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@discordjs/core": "1.1.1",
+    "@nuxtjs/robots": "^3.0.0",
     "@vueuse/core": "10.7.2",
     "@vueuse/nuxt": "10.7.2",
     "@vueuse/shared": "10.7.2",

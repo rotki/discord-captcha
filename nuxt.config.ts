@@ -57,9 +57,18 @@ export default defineNuxtConfig({
     '@nuxt/devtools',
     '@nuxtjs/i18n',
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/robots',
     '@vueuse/nuxt',
     './modules/ui-library/module.ts',
   ],
+  robots: {
+    rules: {
+      Disallow: [
+        '/health',
+      ],
+      UserAgent: '*',
+    },
+  },
   runtimeConfig: {
     discord: {
       appId: '',
