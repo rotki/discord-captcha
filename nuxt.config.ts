@@ -44,7 +44,11 @@ export default defineNuxtConfig({
       title: 'discord.rotki.com',
     },
   },
+
+  compatibilityDate: '2024-08-13',
+
   devtools: { enabled: true },
+
   i18n: {
     defaultLocale: 'en',
     langDir: 'locales',
@@ -53,6 +57,7 @@ export default defineNuxtConfig({
     strategy: 'no_prefix',
     vueI18n: './i18n.config.ts',
   },
+
   modules: [
     '@nuxt/devtools',
     '@nuxtjs/i18n',
@@ -61,14 +66,16 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     './modules/ui-library/module.ts',
   ],
+
   robots: {
-    rules: {
-      Disallow: [
-        '/health',
-      ],
-      UserAgent: '*',
-    },
+    groups: [
+      {
+        disallow: ['/health'],
+        userAgent: '*',
+      },
+    ],
   },
+
   runtimeConfig: {
     discord: {
       appId: '',
@@ -91,7 +98,9 @@ export default defineNuxtConfig({
       password: '',
     },
   },
+
   ssr: true,
+
   vite: {
     optimizeDeps: {
       exclude: ['fsevents', 'zlib-sync'],

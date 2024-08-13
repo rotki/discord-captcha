@@ -8,7 +8,7 @@ export async function discordRequest<
   if (options.body)
     options.body = JSON.stringify(options.body);
 
-  return await $fetch<Resp>(url, {
+  return $fetch<Resp>(url, {
     headers: {
       'Authorization': `Bot ${token}`,
       'Content-Type': 'application/json; charset=UTF-8',

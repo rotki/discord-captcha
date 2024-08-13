@@ -6,7 +6,7 @@ WORKDIR /build
 
 RUN --mount=type=cache,target=/root/.npm/_cacache/ \
     --mount=type=cache,target=/root/.local/share/pnpm/store \
-    npm install -g pnpm@8 && \
+    npm install -g pnpm@9 && \
     pnpm install --frozen-lockfile && \
     pnpm run build
 
@@ -19,7 +19,7 @@ ENV NITRO_HOST=0.0.0.0
 ENV NITRO_PORT=4000
 
 RUN --mount=type=cache,target=/root/.npm/_cacache/ \
-    npm install -g pm2@5.3.1 && \
+    npm install -g pm2@5.4.2 && \
     mkdir data
 
 COPY --from=builder /build/.output ./.output/
