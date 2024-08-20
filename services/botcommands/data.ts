@@ -8,7 +8,7 @@ export const dataDirCommand = {
   async execute(interaction: APIInteraction, api: API) {
     await api.interactions.reply(interaction.id, interaction.token, {
       content:
-        'You can find the default data directory locations at https://rotki.readthedocs.io/en/stable/usage_guide.html#rotki-data-directory',
+        'You can find the default data directory locations at https://docs.rotki.com/usage-guides/data-directory.html#rotki-data-directory',
     });
   },
 };
