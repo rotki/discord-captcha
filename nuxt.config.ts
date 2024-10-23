@@ -64,6 +64,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxtjs/robots',
     '@vueuse/nuxt',
+    '@nuxt/test-utils/module',
     './modules/ui-library/module.ts',
   ],
 

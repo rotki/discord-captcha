@@ -11,7 +11,7 @@ export class InviteRepository {
     const { redis } = useRuntimeConfig();
 
     let driver: Driver;
-    if (redis.host && redis.password) {
+    if (redis.host && redis.password !== undefined) {
       logger.info('Using unstorage redis driver');
       driver = redisDriver({
         base: 'discord_invites',
@@ -28,8 +28,33 @@ export class InviteRepository {
     });
   }
 
-  async set(cachedInvite: CachedInvite) {
+  async set(cachedInvite: CachedInvite): Promise<void> {
     await this.storage.setItem(cachedInvite.code, cachedInvite.data);
+    await this.cleanup();
+  }
+
+  private async cleanup(): Promise<void> {
+    const now = Date.now();
+    for await (const [code, data] of this.iterator()) {
+      const expiresAt = data.expiresAt;
+      if (expiresAt === 'never') {
+        if (data.maxUses > 0 && data.maxUses === data.uses) {
+          logger.info(`invite ${code} reached max uses, purging`);
+          await this.delete(code);
+        }
+      }
+      else if (expiresAt === undefined) {
+        logger.info(`invite ${code} didn't have expiration data, purging`);
+        await this.delete(code);
+      }
+      else {
+        const expirationDate = new Date(expiresAt);
+        if (expirationDate.getTime() < now) {
+          logger.info(`invite ${code} expired at ${expiresAt}, purging`);
+          await this.delete(code);
+        }
+      }
+    }
   }
 
   async delete(code: string): Promise<void> {

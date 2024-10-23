@@ -22,7 +22,9 @@ export function toCachedInvite(invite: APIExtendedInvite | GatewayInviteCreateDi
   return {
     code: invite.code,
     data: {
+      expiresAt: 'expires_at' in invite ? (invite.expires_at ?? 'never') : 'never',
       inviter: toCachedUser(invite.inviter),
+      maxUses: invite.max_uses,
       uses: invite.uses,
     },
   };
