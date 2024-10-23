@@ -53,7 +53,7 @@ export default defineNuxtConfig({
     defaultLocale: 'en',
     langDir: 'locales',
     lazy: true,
-    locales: [{ code: 'en', file: 'en.json', iso: 'en-US' }],
+    locales: [{ code: 'en', file: 'en.json', language: 'en-US' }],
     strategy: 'no_prefix',
     vueI18n: './i18n.config.ts',
   },
@@ -102,6 +102,13 @@ export default defineNuxtConfig({
   ssr: true,
 
   vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern',
+        },
+      },
+    },
     optimizeDeps: {
       exclude: ['fsevents', 'zlib-sync'],
     },

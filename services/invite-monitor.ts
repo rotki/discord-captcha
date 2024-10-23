@@ -5,7 +5,7 @@ import {
   type GatewayInviteCreateDispatchData,
   type GatewayInviteDeleteDispatchData,
   type GatewayReadyDispatchData,
-  type WithIntrinsicProps,
+  type ToEventProps,
 } from '@discordjs/core';
 import { promiseTimeout } from '@vueuse/shared';
 import { toCachedInvite, toCachedUser } from '~/utils/invites';
@@ -49,7 +49,7 @@ export class InviteMonitor {
   private async onReady({
     api,
     data,
-  }: WithIntrinsicProps<GatewayReadyDispatchData>) {
+  }: ToEventProps<GatewayReadyDispatchData>) {
     logger.info('Gateway connection ready');
     await promiseTimeout(1000);
     const guildInvites = await api.guilds.getInvites(this.config.guildId);
@@ -65,7 +65,7 @@ export class InviteMonitor {
   }
 
   private async onJoin(
-    payload: WithIntrinsicProps<GatewayGuildMemberAddDispatchData>,
+    payload: ToEventProps<GatewayGuildMemberAddDispatchData>,
   ) {
     const user = payload.data.user;
     if (!user) {
@@ -107,7 +107,7 @@ export class InviteMonitor {
 
   private async onInviteCreated({
     data,
-  }: WithIntrinsicProps<GatewayInviteCreateDispatchData>) {
+  }: ToEventProps<GatewayInviteCreateDispatchData>) {
     logger.info(`Invite ${data.code} was created by ${data.inviter?.username}`);
 
     await this.repository.set(toCachedInvite(data));
@@ -115,7 +115,7 @@ export class InviteMonitor {
 
   private async onInviteDeleted({
     data,
-  }: WithIntrinsicProps<GatewayInviteDeleteDispatchData>) {
+  }: ToEventProps<GatewayInviteDeleteDispatchData>) {
     logger.info(`Invite ${data.code} was deleted`);
     await this.repository.delete(data.code);
   }

@@ -4,7 +4,7 @@ import {
   type Client,
   GatewayDispatchEvents,
   InteractionType,
-  type WithIntrinsicProps,
+  type ToEventProps,
 } from '@discordjs/core';
 import { commands } from '~/services/botcommands';
 import { logger } from '~/utils/logger';
@@ -39,7 +39,7 @@ export class Commands {
   private async onInteractionCreate({
     api,
     data: interaction,
-  }: WithIntrinsicProps<APIInteraction>) {
+  }: ToEventProps<APIInteraction>) {
     if (interaction.type !== InteractionType.ApplicationCommand) {
       logger.debug('Received interaction was not a command');
       return;
