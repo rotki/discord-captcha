@@ -11,33 +11,33 @@ const benefits = computed<BenefitDetails[]>(() => [
   {
     title: t('discord.benefits.items.engagement.title'),
     description: t('discord.benefits.items.engagement.description'),
-    icon: 'team-line',
+    icon: 'lu-globe',
   },
   {
     title: t('discord.benefits.items.bug_reporting.title'),
     description: t('discord.benefits.items.bug_reporting.description'),
-    icon: 'bug-2-line',
+    icon: 'lu-bug',
   },
 
   {
     title: t('discord.benefits.items.community_support.title'),
     description: t('discord.benefits.items.community_support.description'),
-    icon: 'questionnaire-line',
+    icon: 'lu-message-circle-question',
   },
   {
     title: t('discord.benefits.items.learn.title'),
     description: t('discord.benefits.items.learn.description'),
-    icon: 'book-2-line',
+    icon: 'lu-book-text',
   },
   {
     title: t('discord.benefits.items.stay_updated.title'),
     description: t('discord.benefits.items.stay_updated.description'),
-    icon: 'newspaper-line',
+    icon: 'lu-newspaper',
   },
   {
     title: t('discord.benefits.items.networking.title'),
     description: t('discord.benefits.items.networking.description'),
-    icon: 'wechat-line',
+    icon: 'lu-messages-square',
   },
 ]);
 </script>

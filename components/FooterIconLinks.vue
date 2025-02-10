@@ -4,19 +4,19 @@ const menus = computed(() => [
     title: 'Github',
     showText: false,
     href: 'https://github.com/rotki',
-    icon: 'github-line' as const,
+    icon: 'lu-github' as const,
   },
   {
     title: 'Twitter',
     showText: false,
     href: 'https://twitter.com/rotkiapp',
-    icon: 'twitter-line' as const,
+    icon: 'lu-x-twitter' as const,
   },
   {
     title: 'Contact',
     showText: true,
     href: 'mailto:info@rotki.com',
-    icon: 'mail-send-line' as const,
+    icon: 'lu-mail' as const,
   },
 ]);
 </script>
