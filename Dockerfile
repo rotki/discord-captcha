@@ -6,7 +6,8 @@ WORKDIR /build
 
 RUN --mount=type=cache,target=/root/.npm/_cacache/ \
     --mount=type=cache,target=/root/.local/share/pnpm/store \
-    npm install -g pnpm@9 && \
+    npm install -g corepack@latest && \
+    corepack enable && \
     pnpm install --frozen-lockfile && \
     pnpm run build
 
