@@ -1,4 +1,5 @@
 import {
+  createRui,
   LuBookText,
   LuBug,
   LuGithub,
@@ -8,7 +9,6 @@ import {
   LuMessagesSquare,
   LuNewspaper,
   LuXTwitter,
-  createRui,
 } from '@rotki/ui-library';
 import '@fontsource/roboto/latin.css';
 

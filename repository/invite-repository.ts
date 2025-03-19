@@ -1,8 +1,8 @@
-import { type Driver, type Storage, createStorage } from 'unstorage';
+import type { CachedInvite, CachedInviteData } from '~/types/invites';
+import { createStorage, type Driver, type Storage } from 'unstorage';
 import fsDriver from 'unstorage/drivers/fs';
 import redisDriver from 'unstorage/drivers/redis';
 import { logger } from '~/utils/logger';
-import type { CachedInvite, CachedInviteData } from '~/types/invites';
 
 export class InviteRepository {
   private readonly storage: Storage<CachedInviteData>;
@@ -61,7 +61,7 @@ export class InviteRepository {
     await this.storage.removeItem(code);
   }
 
-  async *iterator(): AsyncGenerator<[string, CachedInviteData]> {
+  async* iterator(): AsyncGenerator<[string, CachedInviteData]> {
     const keys = await this.storage.getKeys();
     for (const key of keys) {
       const value = await this.storage.getItem(key);

@@ -1,9 +1,9 @@
 import process from 'node:process';
+import { Client, GatewayIntentBits } from '@discordjs/core';
 import { REST } from '@discordjs/rest';
 import { WebSocketManager } from '@discordjs/ws';
-import { Client, GatewayIntentBits } from '@discordjs/core';
-import { InviteMonitor } from '~/services/invite-monitor';
 import { Commands } from '~/services/commands';
+import { InviteMonitor } from '~/services/invite-monitor';
 import { logger } from '~/utils/logger';
 import { consume } from '~/utils/promise';
 

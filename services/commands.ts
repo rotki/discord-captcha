@@ -1,3 +1,4 @@
+import type { REST } from '@discordjs/rest';
 import {
   type APIInteraction,
   ApplicationCommandsAPI,
@@ -9,7 +10,6 @@ import {
 import { commands } from '~/services/botcommands';
 import { logger } from '~/utils/logger';
 import { consume } from '~/utils/promise';
-import type { REST } from '@discordjs/rest';
 
 export class Commands {
   constructor(
