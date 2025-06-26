@@ -2,7 +2,7 @@
   "name": "@rotki/discord-captcha",
   "version": "0.5.1",
   "private": true,
-  "packageManager": "pnpm@10.6.5",
+  "packageManager": "pnpm@10.12.3",
   "type": "module",
   "scripts": {
     "build": "run-p typecheck \"build:site {@}\" --",
@@ -19,50 +19,51 @@
     "typecheck": "nuxi typecheck"
   },
   "dependencies": {
-    "@discordjs/core": "2.0.1",
-    "@nuxtjs/robots": "5.2.8",
-    "@vueuse/core": "13.0.0",
-    "@vueuse/math": "13.0.0",
-    "@vueuse/nuxt": "13.0.0",
-    "@vueuse/shared": "13.0.0",
-    "zod": "3.24.2"
+    "@discordjs/core": "2.2.0",
+    "@nuxtjs/robots": "5.2.11",
+    "@vueuse/core": "13.4.0",
+    "@vueuse/math": "13.4.0",
+    "@vueuse/nuxt": "13.4.0",
+    "@vueuse/shared": "13.4.0",
+    "zod": "3.25.67"
   },
   "devDependencies": {
-    "@commitlint/cli": "19.8.0",
-    "@commitlint/config-conventional": "19.8.0",
-    "@fontsource/roboto": "5.2.5",
-    "@nuxt/devtools": "2.3.0",
-    "@nuxt/test-utils": "3.17.2",
-    "@nuxtjs/i18n": "9.3.2",
-    "@nuxtjs/tailwindcss": "6.13.2",
-    "@rotki/eslint-config": "4.0.1",
-    "@rotki/ui-library": "1.12.2",
-    "@types/node": "20.17.24",
-    "@vitest/coverage-v8": "3.0.9",
-    "@vitest/ui": "3.0.9",
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
+    "@fontsource/roboto": "5.2.6",
+    "@nuxt/devtools": "2.5.0",
+    "@nuxt/test-utils": "3.19.1",
+    "@nuxtjs/i18n": "9.5.6",
+    "@nuxtjs/tailwindcss": "6.14.0",
+    "@rotki/eslint-config": "4.1.0",
+    "@rotki/ui-library": "2.4.3",
+    "@types/node": "22.15.33",
+    "@vitest/coverage-v8": "3.2.4",
+    "@vitest/ui": "3.2.4",
     "@vue/test-utils": "2.4.6",
-    "bumpp": "10.1.0",
-    "eslint": "9.22.0",
+    "bumpp": "10.2.0",
+    "eslint": "9.29.0",
     "eslint-plugin-nuxt": "4.0.0",
-    "happy-dom": "16.8.1",
+    "happy-dom": "17.6.3",
     "husky": "9.1.7",
-    "lint-staged": "15.5.0",
-    "npm-run-all2": "7.0.2",
-    "nuxt": "3.16.0",
-    "sass": "1.86.0",
+    "lint-staged": "16.1.2",
+    "npm-run-all2": "8.0.4",
+    "nuxt": "3.17.5",
+    "sass": "1.89.2",
     "tailwindcss": "3.4.17",
-    "typescript": "5.8.2",
-    "vitest": "3.0.9",
-    "vue-tsc": "2.2.8",
-    "zlib-sync": "0.1.9"
+    "typescript": "5.8.3",
+    "vitest": "3.2.4",
+    "vue-tsc": "2.2.10",
+    "zlib-sync": "0.1.10"
   },
   "engines": {
-    "node": ">=20 <21",
+    "node": ">=22 <23",
     "pnpm": ">=10 <11"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "esbuild"
+      "esbuild",
+      "zlib-sync"
     ]
   },
   "husky": {

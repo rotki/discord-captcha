@@ -11,7 +11,10 @@ const displayUrl = computed(() => siteUrl.split('//')[1]);
     <div
       class="bg-rui-primary h-[48px] text-rui-dark-text flex flex-row items-center justify-center"
     >
-      <i18n-t keypath="discord.link">
+      <i18n-t
+        keypath="discord.link"
+        scope="global"
+      >
         <template #link>
           <NuxtLink
             :href="siteUrl"

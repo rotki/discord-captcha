@@ -2,7 +2,7 @@
 import { get, set } from '@vueuse/core';
 import { type DiscordInvite, DiscordInviteResponse } from '~/types/discord';
 
-const { t } = useI18n();
+const { t } = useI18n({ useScope: 'global' });
 
 const valid = ref(true);
 const invite = ref<DiscordInvite>();
@@ -67,6 +67,7 @@ async function onCaptchaSuccess(token: string) {
         >
           <i18n-t
             tag="div"
+            scope="global"
             keypath="discord.invite.link"
           >
             <template #link>
@@ -83,6 +84,7 @@ async function onCaptchaSuccess(token: string) {
           <i18n-t
             v-if="expiry"
             tag="div"
+            scope="global"
             keypath="discord.invite.expiry"
           >
             <template #expiry>

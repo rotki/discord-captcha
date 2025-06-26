@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export const DiscordInviteBody = z.object({
   captcha: z.string(),

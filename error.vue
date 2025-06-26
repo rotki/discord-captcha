@@ -2,7 +2,7 @@
 import { get } from '@vueuse/core';
 
 const error = useError();
-const { t } = useI18n();
+const { t } = useI18n({ useScope: 'global' });
 const css = useCssModule();
 
 const title = computed(() => get(error)?.message ?? '');
