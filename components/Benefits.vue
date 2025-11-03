@@ -22,7 +22,7 @@ const benefits = computed<BenefitDetails[]>(() => [
   {
     title: t('discord.benefits.items.community_support.title'),
     description: t('discord.benefits.items.community_support.description'),
-    icon: 'lu-message-circle-question',
+    icon: 'lu-message-circle-question-mark',
   },
   {
     title: t('discord.benefits.items.learn.title'),

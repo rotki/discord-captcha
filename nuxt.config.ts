@@ -103,13 +103,6 @@ export default defineNuxtConfig({
   ssr: true,
 
   vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          api: 'modern',
-        },
-      },
-    },
     optimizeDeps: {
       exclude: ['fsevents', 'zlib-sync'],
     },
