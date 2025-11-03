@@ -21,10 +21,10 @@
   "dependencies": {
     "@discordjs/core": "2.3.0",
     "@nuxtjs/robots": "5.5.6",
-    "@vueuse/core": "13.9.0",
-    "@vueuse/math": "13.9.0",
-    "@vueuse/nuxt": "13.9.0",
-    "@vueuse/shared": "13.9.0",
+    "@vueuse/core": "14.0.0",
+    "@vueuse/math": "14.0.0",
+    "@vueuse/nuxt": "14.0.0",
+    "@vueuse/shared": "14.0.0",
     "zod": "3.25.76"
   },
   "devDependencies": {
