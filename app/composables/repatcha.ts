@@ -1,4 +1,5 @@
 import { set } from '@vueuse/core';
+import { ref } from 'vue';
 
 export function useRecaptcha() {
   const recaptchaPassed = ref(false);
@@ -21,7 +22,9 @@ export function useRecaptcha() {
 
   const resetCaptcha = (): void => {
     onExpired();
-    window.grecaptcha?.reset(captchaId.value);
+    if (import.meta.client) {
+      window.grecaptcha?.reset(captchaId.value);
+    }
   };
 
   return {

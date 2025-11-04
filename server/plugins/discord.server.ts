@@ -1,11 +1,11 @@
 import process from 'node:process';
+import { logger } from '#shared/utils/logger';
+import { consume } from '#shared/utils/promise';
 import { Client, GatewayIntentBits } from '@discordjs/core';
 import { REST } from '@discordjs/rest';
 import { WebSocketManager } from '@discordjs/ws';
-import { Commands } from '~/services/commands';
-import { InviteMonitor } from '~/services/invite-monitor';
-import { logger } from '~/utils/logger';
-import { consume } from '~/utils/promise';
+import { Commands } from '../services/commands';
+import { InviteMonitor } from '../services/invite-monitor';
 
 async function initPlugin() {
   if (process.env.BUILD) {

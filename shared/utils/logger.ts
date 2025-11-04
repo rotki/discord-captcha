@@ -1,3 +1,4 @@
+import { useRuntimeConfig } from '#imports';
 import { createConsola } from 'consola';
 
 export const logger = createConsola({

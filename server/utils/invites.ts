@@ -3,7 +3,7 @@ import type {
   APIUser,
   GatewayInviteCreateDispatchData,
 } from '@discordjs/core';
-import type { CachedInvite, CachedUser } from '~/types/invites';
+import type { CachedInvite, CachedUser } from '../types/invites';
 
 export const toCachedUser: {
   (user: APIUser): CachedUser;

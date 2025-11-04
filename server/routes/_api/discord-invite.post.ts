@@ -1,12 +1,12 @@
-import { FetchError } from 'ofetch';
-import { $fetch } from 'ofetch/node';
 import {
   CaptchaVerification,
   type DiscordInvite,
   DiscordInviteBody,
   DiscordInviteResponse,
-} from '~/types/discord';
-import { discordRequest } from '~/utils/discord';
+} from '#shared/types/discord';
+import { FetchError } from 'ofetch';
+import { $fetch } from 'ofetch/node';
+import { discordRequest } from '../../utils/discord';
 
 export default defineEventHandler(async (event) => {
   const {

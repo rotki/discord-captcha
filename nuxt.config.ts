@@ -45,14 +45,15 @@ export default defineNuxtConfig({
     },
   },
 
-  compatibilityDate: '2024-08-13',
+  compatibilityDate: '2025-01-01',
+
+  css: ['@rotki/ui-library/style.css'],
 
   devtools: { enabled: true },
 
   i18n: {
     defaultLocale: 'en',
     langDir: 'locales',
-    lazy: true,
     locales: [{ code: 'en', file: 'en.json', language: 'en-US' }],
     strategy: 'no_prefix',
     vueI18n: './i18n.config.ts',
@@ -101,6 +102,12 @@ export default defineNuxtConfig({
   },
 
   ssr: true,
+
+  typescript: {
+    nodeTsConfig: {
+      include: ['../vitest.config.ts'],
+    },
+  },
 
   vite: {
     optimizeDeps: {

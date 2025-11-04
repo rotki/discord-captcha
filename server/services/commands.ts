@@ -1,4 +1,6 @@
 import type { REST } from '@discordjs/rest';
+import { logger } from '#shared/utils/logger';
+import { consume } from '#shared/utils/promise';
 import {
   type APIInteraction,
   ApplicationCommandsAPI,
@@ -7,9 +9,7 @@ import {
   InteractionType,
   type ToEventProps,
 } from '@discordjs/core';
-import { commands } from '~/services/botcommands';
-import { logger } from '~/utils/logger';
-import { consume } from '~/utils/promise';
+import { commands } from './botcommands';
 
 export class Commands {
   constructor(

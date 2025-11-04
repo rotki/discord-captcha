@@ -1,4 +1,6 @@
-import type { CachedInviteData, CachedUser } from '~/types/invites';
+import type { CachedInviteData, CachedUser } from '../types/invites';
+import { logger } from '#shared/utils/logger';
+import { consume } from '#shared/utils/promise';
 import {
   type Client,
   GatewayDispatchEvents,
@@ -9,10 +11,8 @@ import {
   type ToEventProps,
 } from '@discordjs/core';
 import { promiseTimeout } from '@vueuse/shared';
-import { InviteRepository } from '~/repository/invite-repository';
-import { toCachedInvite, toCachedUser } from '~/utils/invites';
-import { logger } from '~/utils/logger';
-import { consume } from '~/utils/promise';
+import { InviteRepository } from '../utils/invite-repository';
+import { toCachedInvite, toCachedUser } from '../utils/invites';
 
 export class InviteMonitor {
   private botUser: CachedUser = {

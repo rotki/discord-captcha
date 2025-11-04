@@ -1,6 +1,6 @@
-import type { CachedInvite, CachedInviteData, CachedUser } from '~/types/invites';
+import type { CachedInvite, CachedInviteData, CachedUser } from '../types/invites';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { InviteRepository } from '~/repository/invite-repository';
+import { InviteRepository } from './invite-repository';
 
 const inviter: CachedUser = {
   id: '123456789',

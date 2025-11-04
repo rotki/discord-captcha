@@ -1,8 +1,8 @@
-import type { CachedInvite, CachedInviteData } from '~/types/invites';
+import type { CachedInvite, CachedInviteData } from '../types/invites';
+import { logger } from '#shared/utils/logger';
 import { createStorage, type Driver, type Storage } from 'unstorage';
 import fsDriver from 'unstorage/drivers/fs';
 import redisDriver from 'unstorage/drivers/redis';
-import { logger } from '~/utils/logger';
 
 export class InviteRepository {
   private readonly storage: Storage<CachedInviteData>;

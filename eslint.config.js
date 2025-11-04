@@ -25,7 +25,7 @@ export default rotki({
   files: [
     'modules/**/*.ts',
     'server/**/*.ts',
-    'types/recaptcha.d.ts',
+    'shared/types/**/*.d.ts',
   ],
   rules: {
     'import/no-default-export': 'off',

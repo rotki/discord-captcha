@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { type DiscordInvite, DiscordInviteResponse } from '#shared/types/discord';
 import { get, set } from '@vueuse/core';
-import { type DiscordInvite, DiscordInviteResponse } from '~/types/discord';
 
 const { t } = useI18n({ useScope: 'global' });
 
@@ -22,8 +22,7 @@ const expiry = computed(() => {
   return get(invite, 'expires_at');
 });
 
-const { onSuccess, onError, onExpired, captchaId, resetCaptcha }
-  = useRecaptcha();
+const { onSuccess, onError, onExpired, captchaId, resetCaptcha } = useRecaptcha();
 
 async function onCaptchaSuccess(token: string) {
   onSuccess(token);

@@ -2,9 +2,11 @@ import plugin from '@rotki/ui-library/theme';
 
 export default {
   content: [
-    './components/**/*.{vue,js,ts}',
-    './layouts/**/*.vue',
-    './pages/**/*.vue',
+    './app/components/**/*.{vue,js,ts}',
+    './app/layouts/**/*.vue',
+    './app/pages/**/*.vue',
+    './app/app.vue',
+    './app/error.vue',
   ],
   theme: {
     container: {
