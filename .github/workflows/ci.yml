@@ -32,57 +32,99 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
+        with:
+          package_json_file: web/package.json
 
       - name: Setup node env 🏗
         uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
           cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
 
       - name: Install dependencies 👨🏻‍💻
         run: pnpm install --frozen-lockfile
+        working-directory: web
 
       - name: Validate current commit (last commit) with commitlint
         if: github.event_name == 'push'
         run: pnpm exec commitlint --from HEAD~1 --to HEAD --verbose
+        working-directory: web
 
       - name: Validate PR commits with commitlint
         if: github.event_name == 'pull_request'
         run: pnpm exec commitlint --from "${BASE_SHA}" --to "${HEAD_SHA}" --verbose
+        working-directory: web
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
 
-  ci:
+  go:
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
-      - name: Checkout 🛎
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: bot/go.mod
+          cache-dependency-path: bot/go.sum
+
+      - name: Lint
+        uses: golangci/golangci-lint-action@v7
+        with:
+          working-directory: bot
+
+      - name: Test
+        run: go test ./...
+        working-directory: bot
+
+      - name: Build
+        run: go build ./...
+        working-directory: bot
+
+  web:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
         uses: actions/checkout@v5
         with:
           persist-credentials: false
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
+        with:
+          package_json_file: web/package.json
 
       - name: Setup node env 🏗
         uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
           cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
 
-      - name: Install dependencies 👨🏻‍💻
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        working-directory: web
 
-      - name: Run linter 👀
+      - name: Lint
         run: pnpm run lint
+        working-directory: web
 
-      - name: Build 🚧
+      - name: Typecheck
+        run: pnpm run typecheck
+        working-directory: web
+
+      - name: Build
         run: pnpm run build
-
-      - name: Test
-        run: pnpm run test --coverage
+        working-directory: web
 
   build-docker:
     runs-on: ubuntu-latest
