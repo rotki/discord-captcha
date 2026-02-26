@@ -1,35 +1,30 @@
-FROM node:22 AS builder
-
-COPY ./ /build/
-
+# --- Build Frontend ---
+FROM node:24-alpine AS web-build
 WORKDIR /build
+COPY web/package.json web/pnpm-lock.yaml ./
+RUN corepack enable && pnpm install --frozen-lockfile
+COPY web/ .
+ARG VITE_RECAPTCHA_SITE_KEY
+ARG VITE_SITE_URL
+ENV VITE_RECAPTCHA_SITE_KEY=${VITE_RECAPTCHA_SITE_KEY}
+ENV VITE_SITE_URL=${VITE_SITE_URL}
+RUN pnpm build
 
-RUN --mount=type=cache,target=/root/.npm/_cacache/ \
-    --mount=type=cache,target=/root/.local/share/pnpm/store \
-    npm install -g corepack@latest && \
-    corepack enable && \
-    pnpm install --frozen-lockfile && \
-    pnpm run build
+# --- Build Go ---
+FROM golang:1.26-alpine AS go-build
+WORKDIR /build
+COPY bot/go.mod bot/go.sum ./
+RUN go mod download
+COPY bot/ .
+COPY --from=web-build /build/dist ./internal/staticfs/files/
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o server ./cmd
 
-FROM node:22-alpine AS production
-
-WORKDIR /app
-ARG GIT_SHA
-ENV GIT_SHA=${GIT_SHA}
-ENV NITRO_HOST=0.0.0.0
-ENV NITRO_PORT=4000
-
-RUN --mount=type=cache,target=/root/.npm/_cacache/ \
-    npm install -g pm2@6.0.8 && \
-    mkdir data
-
-COPY --from=builder /build/.output ./.output/
-COPY --from=builder /build/ecosystem.config.cjs ./
-COPY --from=builder /build/package.json ./
-
-EXPOSE ${NITRO_PORT}
-VOLUME /app/data
-
-CMD ["pm2-runtime", "ecosystem.config.cjs"]
-HEALTHCHECK --start-period=30s --retries=2 \
-    CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:${NITRO_PORT}/health || exit 1
+# --- Final ---
+FROM scratch
+COPY --from=go-build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=go-build /build/server /server
+EXPOSE 4000
+VOLUME /data
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD ["/server", "healthcheck"]
+ENTRYPOINT ["/server"]
