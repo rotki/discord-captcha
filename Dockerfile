@@ -27,12 +27,17 @@ RUN CGO_ENABLED=0 GOOS=linux go build \
 FROM scratch
 ARG GIT_SHA=unknown
 ARG VERSION=dev
+ARG BUILD_DATE
+
 LABEL org.opencontainers.image.title="discord-captcha"
 LABEL org.opencontainers.image.description="Discord bot with captcha verification for server access"
 LABEL org.opencontainers.image.source="https://github.com/rotki/discord-captcha"
+LABEL org.opencontainers.image.url="https://rotki.com"
+LABEL org.opencontainers.image.vendor="Rotki Solutions GmbH"
 LABEL org.opencontainers.image.licenses="AGPL-3.0-or-later"
 LABEL org.opencontainers.image.revision="${GIT_SHA}"
 LABEL org.opencontainers.image.version="${VERSION}"
+LABEL org.opencontainers.image.created="${BUILD_DATE}"
 
 COPY --from=go-build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=go-build /build/server /server

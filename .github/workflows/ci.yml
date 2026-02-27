@@ -147,3 +147,4 @@ jobs:
           build-args: |
             GIT_SHA=${{ github.sha }}
             VERSION=${{ github.ref_name }}
+            BUILD_DATE=${{ github.event.repository.updated_at }}
