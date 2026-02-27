@@ -17,10 +17,23 @@ COPY bot/go.mod bot/go.sum ./
 RUN go mod download
 COPY bot/ .
 COPY --from=web-build /build/dist ./internal/staticfs/files/
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o server ./cmd
+ARG GIT_SHA=unknown
+ARG VERSION=dev
+RUN CGO_ENABLED=0 GOOS=linux go build \
+    -ldflags="-s -w -X github.com/rotki/discord-captcha/internal/version.Version=${VERSION} -X github.com/rotki/discord-captcha/internal/version.GitSHA=${GIT_SHA}" \
+    -o server ./cmd
 
 # --- Final ---
 FROM scratch
+ARG GIT_SHA=unknown
+ARG VERSION=dev
+LABEL org.opencontainers.image.title="discord-captcha"
+LABEL org.opencontainers.image.description="Discord bot with captcha verification for server access"
+LABEL org.opencontainers.image.source="https://github.com/rotki/discord-captcha"
+LABEL org.opencontainers.image.licenses="AGPL-3.0-or-later"
+LABEL org.opencontainers.image.revision="${GIT_SHA}"
+LABEL org.opencontainers.image.version="${VERSION}"
+
 COPY --from=go-build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=go-build /build/server /server
 EXPOSE 4000

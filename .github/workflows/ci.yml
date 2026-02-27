@@ -144,3 +144,6 @@ jobs:
         with:
           push: false
           tags: rotki/discord-captcha:latest
+          build-args: |
+            GIT_SHA=${{ github.sha }}
+            VERSION=${{ github.ref_name }}

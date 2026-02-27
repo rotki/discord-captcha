@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -43,8 +44,18 @@ func TestHealthEndpoint(t *testing.T) {
 	}
 
 	body, _ := io.ReadAll(resp.Body)
-	if string(body) != "Ok" {
-		t.Errorf("expected body 'Ok', got %q", string(body))
+	var result map[string]string
+	if err := json.Unmarshal(body, &result); err != nil {
+		t.Fatalf("expected JSON response, got %q", string(body))
+	}
+	if result["status"] != "ok" {
+		t.Errorf("expected status 'ok', got %q", result["status"])
+	}
+	if _, ok := result["version"]; !ok {
+		t.Error("expected 'version' field in response")
+	}
+	if _, ok := result["git_sha"]; !ok {
+		t.Error("expected 'git_sha' field in response")
 	}
 }
 

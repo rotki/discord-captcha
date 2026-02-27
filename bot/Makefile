@@ -2,7 +2,9 @@
 
 BINARY := server
 BUILD_DIR := ./cmd
-LDFLAGS := -s -w
+VERSION ?= dev
+GIT_SHA ?= $(shell git rev-parse --short HEAD)
+LDFLAGS := -s -w -X github.com/rotki/discord-captcha/internal/version.Version=$(VERSION) -X github.com/rotki/discord-captcha/internal/version.GitSHA=$(GIT_SHA)
 
 build: ## Build the Go binary
 	CGO_ENABLED=0 go build -ldflags="$(LDFLAGS)" -o $(BINARY) $(BUILD_DIR)

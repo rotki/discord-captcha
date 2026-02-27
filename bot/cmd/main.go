@@ -17,6 +17,7 @@ import (
 	"github.com/rotki/discord-captcha/internal/config"
 	"github.com/rotki/discord-captcha/internal/staticfs"
 	"github.com/rotki/discord-captcha/internal/store"
+	"github.com/rotki/discord-captcha/internal/version"
 )
 
 func main() {
@@ -39,6 +40,8 @@ func main() {
 	slog.SetDefault(slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
 		Level: logLevel,
 	})))
+
+	slog.Info("starting", "version", version.Version, "git_sha", version.GitSHA)
 
 	cfg, err := config.Load()
 	if err != nil {
