@@ -120,6 +120,12 @@ func accessLogMiddleware(next http.Handler) http.Handler {
 		start := time.Now()
 		rec := &statusRecorder{ResponseWriter: w, status: http.StatusOK}
 		next.ServeHTTP(rec, r)
+
+		// Skip logging internal health checks from loopback
+		if r.URL.Path == "/health" && isLoopback(realIP(r)) {
+			return
+		}
+
 		slog.Info("request",
 			"method", r.Method,
 			"path", r.URL.Path,
@@ -128,6 +134,11 @@ func accessLogMiddleware(next http.Handler) http.Handler {
 			"remote", realIP(r),
 		)
 	})
+}
+
+func isLoopback(ip string) bool {
+	parsed := net.ParseIP(ip)
+	return parsed != nil && parsed.IsLoopback()
 }
 
 func securityHeadersMiddleware(next http.Handler) http.Handler {
