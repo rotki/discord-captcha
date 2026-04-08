@@ -87,51 +87,42 @@ func (m *InviteMonitor) onGuildMemberAdd(s *discordgo.Session, event *discordgo.
 
 	slog.Debug("new user joined", "id", member.ID, "username", member.Username)
 
+	// Phase 1: Snapshot — read cached and live state into plain maps
+	cachedInvites := snapshotStore(m.store)
+
 	apiInvites, err := s.GuildInvites(event.GuildID)
 	if err != nil {
 		slog.Error("failed to fetch guild invites on member add", "error", err)
 		return
 	}
 
-	currentInvites := make(map[string]store.CachedInviteData)
+	currentInvites := make(map[string]store.CachedInviteData, len(apiInvites))
 	for _, invite := range apiInvites {
 		cached := toCachedInvite(invite)
 		currentInvites[cached.Code] = cached.Data
 	}
 
-	botUserID := m.getBotUserID()
-	var usedBotInviteCode string
+	// Phase 2: Match — pure function, no side effects
+	result := matchUsedInvite(cachedInvites, currentInvites, m.getBotUserID())
 
-	for code, data := range m.store.Iterator() {
-		invite, ok := currentInvites[code]
-		if !ok {
-			continue
-		}
-
-		if invite.Uses <= data.Uses {
-			continue
-		}
-
-		// Always update the store with fresh use count
-		if err := m.store.Set(store.CachedInvite{Code: code, Data: invite}); err != nil {
+	// Phase 3: Mutate — apply store updates outside any iteration
+	for code, data := range result.StoreUpdates {
+		if err := m.store.Set(store.CachedInvite{Code: code, Data: data}); err != nil {
 			slog.Error("failed to update invite", "code", code, "error", err)
 		}
-
-		if invite.Inviter != nil && invite.Inviter.ID != botUserID {
-			slog.Debug("invite used by non-bot inviter, bailing", "code", code)
-			return
-		}
-
-		usedBotInviteCode = code
 	}
 
-	if usedBotInviteCode == "" {
+	if result.Code == "" {
 		slog.Warn("could not determine which invite was used", "user", member.Username)
 		return
 	}
 
+	if err := m.store.Delete(result.Code); err != nil {
+		slog.Error("failed to delete consumed invite from cache", "code", result.Code, "error", err)
+	}
+
 	roleID := m.config.DiscordRoleID
-	slog.Debug("adding role to user", "username", member.Username, "role", roleID, "invite", usedBotInviteCode)
+	slog.Debug("adding role to user", "username", member.Username, "role", roleID, "invite", result.Code)
 
 	if err := s.GuildMemberRoleAdd(event.GuildID, member.ID, roleID); err != nil {
 		slog.Error("failed to add role", "user", member.Username, "role", roleID, "error", err)
@@ -150,12 +141,20 @@ func (m *InviteMonitor) onInviteCreate(s *discordgo.Session, event *discordgo.In
 	}
 }
 
-func (m *InviteMonitor) onInviteDelete(s *discordgo.Session, event *discordgo.InviteDelete) {
+func (m *InviteMonitor) onInviteDelete(_ *discordgo.Session, event *discordgo.InviteDelete) {
+	// Intentionally no cache deletion here. Discord fires InviteDelete before
+	// GuildMemberAdd for single-use invites, and onGuildMemberAdd needs the
+	// cached entry to detect consumed invites. Cleanup is handled by
+	// onGuildMemberAdd (after match) and the periodic Cleanup goroutine.
 	slog.Info("invite deleted", "code", event.Code)
+}
 
-	if err := m.store.Delete(event.Code); err != nil {
-		slog.Error("failed to delete invite from cache", "code", event.Code, "error", err)
+func snapshotStore(s store.InviteStore) map[string]store.CachedInviteData {
+	snap := make(map[string]store.CachedInviteData)
+	for code, data := range s.Iterator() {
+		snap[code] = data
 	}
+	return snap
 }
 
 func toCachedInvite(invite *discordgo.Invite) store.CachedInvite {
