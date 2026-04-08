@@ -1,7 +1,7 @@
 # --- Build Frontend ---
 FROM node:24-alpine AS web-build
 WORKDIR /build
-COPY web/package.json web/pnpm-lock.yaml ./
+COPY web/package.json web/pnpm-lock.yaml web/pnpm-workspace.yaml ./
 RUN corepack enable && pnpm install --frozen-lockfile
 COPY web/ .
 ARG VITE_RECAPTCHA_SITE_KEY

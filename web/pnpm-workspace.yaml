@@ -1,0 +1,12 @@
+blockExoticSubdeps: true
+minimumReleaseAge: 10080
+saveExact: true
+shellEmulator: true
+strictDepBuilds: true
+trustPolicy: no-downgrade
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+overrides:
+  chokidar: '>=5.0.0'
+  immutable: '>=5.1.5'
