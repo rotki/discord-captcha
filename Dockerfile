@@ -1,5 +1,5 @@
 # --- Build Frontend ---
-FROM node:24-alpine AS web-build
+FROM node:24.19.0-alpine AS web-build
 WORKDIR /build
 COPY web/package.json web/pnpm-lock.yaml web/pnpm-workspace.yaml ./
 RUN corepack enable && pnpm install --frozen-lockfile

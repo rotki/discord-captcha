@@ -14,5 +14,5 @@ allowBuilds:
   '@parcel/watcher': true
   esbuild: true
 overrides:
-  chokidar: '>=5.0.0'
-  immutable: '>=5.1.5'
+  chokidar: 5.0.0
+  immutable: 5.1.9

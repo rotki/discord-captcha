@@ -5,8 +5,8 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  chokidar: '>=5.0.0'
-  immutable: '>=5.1.5'
+  chokidar: 5.0.0
+  immutable: 5.1.9
 
 importers:
 
