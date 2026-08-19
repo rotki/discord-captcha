@@ -1,9 +1,15 @@
 blockExoticSubdeps: true
 minimumReleaseAge: 10080
+minimumReleaseAgeExclude:
+  - '@rotki/ui-library'
+  - '@rotki/eslint-config'
+  - '@rotki/eslint-plugin'
 saveExact: true
 shellEmulator: true
 strictDepBuilds: true
 trustPolicy: no-downgrade
+trustPolicyExclude:
+  - tailwind-merge@2.6.1
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true

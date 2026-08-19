@@ -13,6 +13,12 @@
       "allowedVersions": "/^(24)\\./",
       "groupName": "Node.js",
       "matchPackageNames": ["@types/node", "node"]
+    },
+    {
+      // Packages we publish ourselves; the release-age delay guards against
+      // third-party takeovers and has no purpose here.
+      "matchPackageNames": ["@rotki/**"],
+      "minimumReleaseAge": null
     }
   ]
 }
