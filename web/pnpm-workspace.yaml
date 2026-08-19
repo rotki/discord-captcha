@@ -9,6 +9,11 @@ shellEmulator: true
 strictDepBuilds: true
 trustPolicy: no-downgrade
 trustPolicyExclude:
+  # @rotki/ui-library pins this exact version. It is a hand-published backport on the
+  # v2 LTS line with no provenance, while 2.5.5 and the 3.x line are CI-published, so
+  # the policy reads it as a downgrade. Verified not a takeover: same publisher
+  # account, matching GitHub release. Every repo that consumes ui-library carries the
+  # same entry; it goes away once ui-library drops the dependency.
   - tailwind-merge@2.6.1
 allowBuilds:
   '@parcel/watcher': true
