@@ -16,8 +16,8 @@ importers:
         specifier: 5.3.0
         version: 5.3.0
       '@rotki/ui-library':
-        specifier: 2.12.2
-        version: 2.12.2(@vueuse/core@14.4.0(vue@3.5.41(typescript@5.9.3)))(@vueuse/shared@14.4.0(vue@3.5.41(typescript@5.9.3)))(dayjs@1.11.19)(vue@3.5.41(typescript@5.9.3))
+        specifier: 2.23.5
+        version: 2.23.5(dayjs@1.11.19)(tailwindcss@3.4.19(yaml@2.9.0))(vue-router@5.2.0(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(rollup@4.62.4)(vite@7.3.6(@types/node@25.3.1)(jiti@1.21.7)(sass@1.93.3)(yaml@2.9.0))(vue@3.5.41(typescript@5.9.3)))(vue@3.5.41(typescript@5.9.3))
       '@vueuse/core':
         specifier: 14.4.0
         version: 14.4.0(vue@3.5.41(typescript@5.9.3))
@@ -449,6 +449,15 @@ packages:
     resolution: {integrity: sha512-iH1B076HoAshH1mLpHMgwdGeTs0CYwL0SPMkGuSebZrwBp16v415e9NZXg2jtrqPVQjf6IANe2Vtlr5KswtcZQ==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
+  '@floating-ui/core@1.8.0':
+    resolution: {integrity: sha512-0CIZ5itps/8x7BG8dEIhs53BvCUH2PCoogtakwRTut+Arm58sJooJ0AuZhLw2HJYIR5cMLNPBSS728sPho2khQ==}
+
+  '@floating-ui/dom@1.8.0':
+    resolution: {integrity: sha512-yXSrzeHZBTZadLOlfyhCkJHNeLJnHRnRInwdZ40L7ZiaAtrBwoYlsDrX3v5zB1Utk7CLfzcOVnVVWoXEky7Ceg==}
+
+  '@floating-ui/utils@0.2.12':
+    resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
+
   '@fontsource/roboto@5.3.0':
     resolution: {integrity: sha512-BapRJOWYP+LZ21zp+wBQjfpPYKRoxc4LspJ/RLuI+HSMBD5u/X4O+ESDrSvEqDSy0rAl7GwBJ+09mdc16cVQ1Q==}
 
@@ -608,9 +617,6 @@ packages:
   '@pkgr/core@0.3.6':
     resolution: {integrity: sha512-SEeaJLb3qBNF/OaXnaR1NmmBbFYk1zC0ZH/52fATcRPLFg/p791YrcyFFy44Bo9sLaGuSuLp5Q6axbb/O+v/RA==}
     engines: {node: ^14.18.0 || >=16.0.0}
-
-  '@popperjs/core@2.11.8':
-    resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
 
   '@rolldown/pluginutils@1.0.1':
     resolution: {integrity: sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw==}
@@ -778,14 +784,16 @@ packages:
     peerDependencies:
       eslint: ^9.20.0 || ^10.0.0
 
-  '@rotki/ui-library@2.12.2':
-    resolution: {integrity: sha512-dVdD5gKZ96M8lL/wXadAmgbBVZEbNiOwXzeCoShqBOezO+O9v4jVJ97uwcetxYyAF+9P2uufnpvmD7F6bKfUKg==}
-    engines: {node: '>=24 <25', pnpm: '>=10 <11'}
+  '@rotki/ui-library@2.23.5':
+    resolution: {integrity: sha512-a4Rji4O9lSE1GZbWOCNI5Icf2mvawfqvCy9Yz11C2Xu9er1lnS1A58uoL8BYrOhCqs0y8G9p5CyJs1jTSf5F+w==}
+    engines: {node: '>=24 <25', pnpm: '>=11 <12'}
     peerDependencies:
-      '@vueuse/core': '>13.0.0'
-      '@vueuse/shared': '>13.0.0'
       dayjs: '>=1.11.13 <12'
       vue: '>=3.5.0'
+      vue-router: '>=5.0.0'
+    peerDependenciesMeta:
+      vue-router:
+        optional: true
 
   '@simple-libs/child-process-utils@1.0.2':
     resolution: {integrity: sha512-/4R8QKnd/8agJynkNdJmNw2MBxuFTRcNFnE5Sg/G+jkSsV8/UBgULMzhizWWW42p8L5H7flImV2ATi79Ove2Tw==}
@@ -1051,6 +1059,11 @@ packages:
   '@vue/shared@3.5.41':
     resolution: {integrity: sha512-IOnwSCma8j+9xJT6b8H0dEYidC80NsYmNMlZxRsukYcSoGaDBohog5hDxzeUXdFeGWFA++vWvxqOmrr96VlqMA==}
 
+  '@vueuse/core@14.3.0':
+    resolution: {integrity: sha512-aHfz47g0ZhMtTVHmIzMVpJy8ePhhOy68GY5bv110+5DVtZ+W7BsOx+m61UNQqfrWyPztIHIanWa3E2tib3NFIw==}
+    peerDependencies:
+      vue: ^3.5.0
+
   '@vueuse/core@14.4.0':
     resolution: {integrity: sha512-X4WHz1HlCzCBoYXesUkifzzWBAcZgXG8Fi5iNPQg/epdzOB3gu8Fawj3hvuwYR1nGcXGnvxwYYcUC/71++svtQ==}
     peerDependencies:
@@ -1061,8 +1074,16 @@ packages:
     peerDependencies:
       vue: ^3.5.0
 
+  '@vueuse/metadata@14.3.0':
+    resolution: {integrity: sha512-BwxmbAzwAVF50+MW57GXOUEV61nFBGnlBvrTqj49PqWJu3uw7hdu72ztXeZ33RdZtDY6kO+bfCAE1PCn88Tktw==}
+
   '@vueuse/metadata@14.4.0':
     resolution: {integrity: sha512-swx/255R6JyHZFJhx845iz5CRWDZdCfvkZOpACWc5+c5WHcG24mv8gUT1WIdFQaHt6dq79rvILd9QnCWiyVm9g==}
+
+  '@vueuse/shared@14.3.0':
+    resolution: {integrity: sha512-bZpge9eSXwa4ToSiqJ7j6KRwhAsneMFoSz3LMWKQDkqimm3D/tbFlrklrs/IOqC8tEcYmXQZJ6N0UrjhBirVCg==}
+    peerDependencies:
+      vue: ^3.5.0
 
   '@vueuse/shared@14.4.0':
     resolution: {integrity: sha512-JRgY90Sz8DDtPMsaDflvPMp9xYk69JZAmbuDvAquUVXKr2gEjqtzGNTTthLfckH0BzBqvnu31gb4a8TGLRe79g==}
@@ -2401,6 +2422,19 @@ packages:
     resolution: {integrity: sha512-eNRKgb3z66Yp3D2CixVujOUvXLFUTij/zVnV8KRyvFdQwpz7I5DS8UfRkTeLzb64u+dkzDSdelE24izu+zSSUg==}
     engines: {node: ^14.18.0 || >=16.0.0}
 
+  tailwind-merge@2.6.1:
+    resolution: {integrity: sha512-Oo6tHdpZsGpkKG88HJ8RR1rg/RdnEkQEfMoEk2x1XRI3F1AxeU+ijRXpiVUF4UbLfcxxRGw6TbUINKYdWVsQTQ==}
+
+  tailwind-variants@3.2.2:
+    resolution: {integrity: sha512-Mi4kHeMTLvKlM98XPnK+7HoBPmf4gygdFmqQPaDivc3DpYS6aIY6KiG/PgThrGvii5YZJqRsPz0aPyhoFzmZgg==}
+    engines: {node: '>=16.x', pnpm: '>=7.x'}
+    peerDependencies:
+      tailwind-merge: '>=3.0.0'
+      tailwindcss: '*'
+    peerDependenciesMeta:
+      tailwind-merge:
+        optional: true
+
   tailwindcss@3.4.19:
     resolution: {integrity: sha512-3ofp+LL8E+pK/JuPLPggVAIaEuhvIz4qNcf3nA1Xn2o/7fb7s/TYpHhwGDv1ZU3PkBluUVaF8PyCHcm48cKLWQ==}
     engines: {node: '>=14.0.0'}
@@ -3019,6 +3053,17 @@ snapshots:
       '@eslint/core': 1.2.1
       levn: 0.4.1
 
+  '@floating-ui/core@1.8.0':
+    dependencies:
+      '@floating-ui/utils': 0.2.12
+
+  '@floating-ui/dom@1.8.0':
+    dependencies:
+      '@floating-ui/core': 1.8.0
+      '@floating-ui/utils': 0.2.12
+
+  '@floating-ui/utils@0.2.12': {}
+
   '@fontsource/roboto@5.3.0': {}
 
   '@humanfs/core@0.19.2':
@@ -3147,8 +3192,6 @@ snapshots:
     optional: true
 
   '@pkgr/core@0.3.6': {}
-
-  '@popperjs/core@2.11.8': {}
 
   '@rolldown/pluginutils@1.0.1': {}
 
@@ -3290,15 +3333,21 @@ snapshots:
       - supports-color
       - typescript
 
-  '@rotki/ui-library@2.12.2(@vueuse/core@14.4.0(vue@3.5.41(typescript@5.9.3)))(@vueuse/shared@14.4.0(vue@3.5.41(typescript@5.9.3)))(dayjs@1.11.19)(vue@3.5.41(typescript@5.9.3))':
+  '@rotki/ui-library@2.23.5(dayjs@1.11.19)(tailwindcss@3.4.19(yaml@2.9.0))(vue-router@5.2.0(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(rollup@4.62.4)(vite@7.3.6(@types/node@25.3.1)(jiti@1.21.7)(sass@1.93.3)(yaml@2.9.0))(vue@3.5.41(typescript@5.9.3)))(vue@3.5.41(typescript@5.9.3))':
     dependencies:
-      '@popperjs/core': 2.11.8
-      '@vueuse/core': 14.4.0(vue@3.5.41(typescript@5.9.3))
-      '@vueuse/shared': 14.4.0(vue@3.5.41(typescript@5.9.3))
+      '@floating-ui/dom': 1.8.0
+      '@vueuse/core': 14.3.0(vue@3.5.41(typescript@5.9.3))
+      '@vueuse/shared': 14.3.0(vue@3.5.41(typescript@5.9.3))
       dayjs: 1.11.19
       scule: 1.3.0
+      tailwind-merge: 2.6.1
+      tailwind-variants: 3.2.2(tailwind-merge@2.6.1)(tailwindcss@3.4.19(yaml@2.9.0))
       tinycolor2: 1.6.0
       vue: 3.5.41(typescript@5.9.3)
+    optionalDependencies:
+      vue-router: 5.2.0(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(rollup@4.62.4)(vite@7.3.6(@types/node@25.3.1)(jiti@1.21.7)(sass@1.93.3)(yaml@2.9.0))(vue@3.5.41(typescript@5.9.3))
+    transitivePeerDependencies:
+      - tailwindcss
 
   '@simple-libs/child-process-utils@1.0.2':
     dependencies:
@@ -3664,6 +3713,13 @@ snapshots:
 
   '@vue/shared@3.5.41': {}
 
+  '@vueuse/core@14.3.0(vue@3.5.41(typescript@5.9.3))':
+    dependencies:
+      '@types/web-bluetooth': 0.0.21
+      '@vueuse/metadata': 14.3.0
+      '@vueuse/shared': 14.3.0(vue@3.5.41(typescript@5.9.3))
+      vue: 3.5.41(typescript@5.9.3)
+
   '@vueuse/core@14.4.0(vue@3.5.41(typescript@5.9.3))':
     dependencies:
       '@types/web-bluetooth': 0.0.21
@@ -3676,7 +3732,13 @@ snapshots:
       '@vueuse/shared': 14.4.0(vue@3.5.41(typescript@5.9.3))
       vue: 3.5.41(typescript@5.9.3)
 
+  '@vueuse/metadata@14.3.0': {}
+
   '@vueuse/metadata@14.4.0': {}
+
+  '@vueuse/shared@14.3.0(vue@3.5.41(typescript@5.9.3))':
+    dependencies:
+      vue: 3.5.41(typescript@5.9.3)
 
   '@vueuse/shared@14.4.0(vue@3.5.41(typescript@5.9.3))':
     dependencies:
@@ -5169,6 +5231,14 @@ snapshots:
   synckit@0.11.13:
     dependencies:
       '@pkgr/core': 0.3.6
+
+  tailwind-merge@2.6.1: {}
+
+  tailwind-variants@3.2.2(tailwind-merge@2.6.1)(tailwindcss@3.4.19(yaml@2.9.0)):
+    dependencies:
+      tailwindcss: 3.4.19(yaml@2.9.0)
+    optionalDependencies:
+      tailwind-merge: 2.6.1
 
   tailwindcss@3.4.19(yaml@2.9.0):
     dependencies:

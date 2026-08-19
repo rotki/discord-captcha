@@ -6,7 +6,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   plugins: [
     vue(),
-    ruiIconsPlugin(),
+    ruiIconsPlugin({ customIcons: ['lu-github', 'lu-x-twitter'] }),
   ],
   resolve: {
     alias: {

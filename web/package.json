@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@fontsource/roboto": "5.3.0",
-    "@rotki/ui-library": "2.12.2",
+    "@rotki/ui-library": "2.23.5",
     "@vueuse/core": "14.4.0",
     "@vueuse/math": "14.4.0",
     "@vueuse/shared": "14.4.0",

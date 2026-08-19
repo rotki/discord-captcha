@@ -4,6 +4,7 @@ import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
 import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue';
+import { brandIcons } from './brand-icons';
 import en from './locales/en.json';
 import '@rotki/ui-library/style.css';
 import '@fontsource/roboto/latin.css';
@@ -25,7 +26,7 @@ const i18n = createI18n({
 
 const rui = createRui({
   theme: {
-    icons,
+    icons: [...icons, ...brandIcons],
     mode: 'light',
   },
 });
