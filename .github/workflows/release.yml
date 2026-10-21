@@ -32,6 +32,6 @@ jobs:
           node-version-file: .nvmrc
           package-manager-cache: false
 
-      - run: npx changelogithub@14
+      - run: npx changelogithub@14.0.0
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
