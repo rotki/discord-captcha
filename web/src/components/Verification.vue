@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RuiAlert } from '@rotki/ui-library';
+import { RuiAlert, RuiProgress } from '@rotki/ui-library';
 import { useI18n } from 'vue-i18n';
 import { useDiscordInvite } from '../composables/discord-invite';
 import { useRecaptcha } from '../composables/recaptcha';
@@ -9,7 +9,7 @@ import Recaptcha from './Recaptcha.vue';
 const { t } = useI18n({ useScope: 'global' });
 
 const { onSuccess, onError, onExpired, captchaId, resetCaptcha } = useRecaptcha();
-const { error, expiry, inviteLink, requestInvite } = useDiscordInvite();
+const { error, expiry, inviteLink, loading, requestInvite } = useDiscordInvite();
 
 async function onCaptchaSuccess(token: string): Promise<void> {
   onSuccess(token);
@@ -38,6 +38,20 @@ async function onCaptchaSuccess(token: string): Promise<void> {
         :invite-link="inviteLink"
         :expiry="expiry"
       />
+      <p
+        v-else-if="loading"
+        class="text-body-1 mt-3 flex items-center gap-2 text-rui-text-secondary"
+        role="status"
+      >
+        <RuiProgress
+          variant="indeterminate"
+          circular
+          color="primary"
+          size="18"
+          thickness="2"
+        />
+        {{ t('discord.invite.creating') }}
+      </p>
       <p
         v-else
         class="text-body-1 mt-3 max-w-prose text-rui-text-secondary"

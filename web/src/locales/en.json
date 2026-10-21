@@ -8,6 +8,7 @@
     "link": "Learn more at {link}",
     "chat": "Chat with us",
     "invite": {
+      "creating": "Creating your invite…",
       "join": "Join the Discord",
       "link": "Or open {link} directly.",
       "expiry": "The invite is valid until {expiry}."
