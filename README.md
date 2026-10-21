@@ -72,8 +72,8 @@ If `REDIS_HOST` is not set, the filesystem store (`/data/invites`) is used.
 
 ### Prerequisites
 
-- Go 1.26+
-- Node.js 24+ with pnpm 10+
+- Go 1.27+
+- Node.js 24+ with pnpm 12+
 - GNU Make (optional, for convenience targets)
 
 ### Setup
