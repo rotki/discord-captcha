@@ -46,25 +46,25 @@ const benefits = computed<BenefitDetail[]>(() => [
 </script>
 
 <template>
-  <div class="px-4 md:px-12 xl:px-16">
-    <div
-      class="text-primary py-[5rem] flex flex-col items-center self-stretch gap-[3rem]"
+  <section
+    class="px-4 md:px-12 xl:px-16 py-16 md:py-20"
+    aria-labelledby="benefits-title"
+  >
+    <h2
+      id="benefits-title"
+      class="text-h5 md:text-h4 text-rui-text"
     >
-      <div>
-        <div class="text-h4">
-          {{ t('discord.benefits.title') }}
-        </div>
-        <div class="text-body-1 mt-[1.25rem]">
-          {{ t('discord.benefits.description') }}
-        </div>
-      </div>
-      <div class="flex justify-between items-center flex-wrap gap-[3rem]">
-        <BenefitDetails
-          v-for="(benefit, i) in benefits"
-          :key="i"
-          v-bind="benefit"
-        />
-      </div>
-    </div>
-  </div>
+      {{ t('discord.benefits.title') }}
+    </h2>
+    <p class="text-body-1 mt-4 max-w-prose text-rui-text-secondary">
+      {{ t('discord.benefits.description') }}
+    </p>
+    <ul class="mt-12 grid gap-x-12 gap-y-10 md:grid-cols-2">
+      <BenefitDetails
+        v-for="benefit in benefits"
+        :key="benefit.icon"
+        v-bind="benefit"
+      />
+    </ul>
+  </section>
 </template>

@@ -1,11 +1,12 @@
 <template>
-  <div class="flex flex-col items-center justify-center">
+  <div class="px-4 md:px-12 xl:px-16">
     <img
       src="@/assets/images/discord_header.webp"
-      alt="rotki"
+      alt=""
       width="1500"
       height="500"
-      class="h-auto max-w-full"
+      decoding="async"
+      class="h-auto w-full rounded-rui-card"
     />
   </div>
 </template>

@@ -4,7 +4,7 @@ import PageHeader from './components/PageHeader.vue';
 </script>
 
 <template>
-  <div class="flex min-h-screen flex-col">
+  <div class="flex min-h-screen flex-col bg-rui-background text-rui-text">
     <PageHeader />
     <main class="mx-auto w-full max-w-7xl flex-1 px-4">
       <RouterView />

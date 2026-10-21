@@ -59,10 +59,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="mt-4">
-    <div
-      ref="recaptchaEl"
-      class="h-20"
-    />
-  </div>
+  <div
+    ref="recaptchaEl"
+    class="h-20"
+  />
 </template>

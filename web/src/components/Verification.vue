@@ -1,116 +1,63 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { RuiAlert } from '@rotki/ui-library';
 import { useI18n } from 'vue-i18n';
+import { useDiscordInvite } from '../composables/discord-invite';
 import { useRecaptcha } from '../composables/recaptcha';
+import InviteResult from './InviteResult.vue';
 import Recaptcha from './Recaptcha.vue';
 
 const { t } = useI18n({ useScope: 'global' });
 
-interface DiscordInvite {
-  code: string;
-  expires_at: string;
-}
-
-const invite = ref<DiscordInvite>();
-const error = ref<string>();
-
-const inviteLink = computed(() => {
-  if (!invite.value)
-    return null;
-  return `https://discord.com/invite/${invite.value.code}`;
-});
-
-const expiry = computed(() => {
-  if (!invite.value)
-    return null;
-  return new Date(invite.value.expires_at);
-});
-
 const { onSuccess, onError, onExpired, captchaId, resetCaptcha } = useRecaptcha();
+const { error, expiry, inviteLink, requestInvite } = useDiscordInvite();
 
-async function onCaptchaSuccess(token: string) {
+async function onCaptchaSuccess(token: string): Promise<void> {
   onSuccess(token);
-
-  try {
-    const response = await fetch('/api/discord-invite', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ captcha: token }),
-    });
-
-    if (!response.ok) {
-      const text = await response.text();
-      throw new Error(text || response.statusText);
-    }
-
-    invite.value = await response.json();
-  }
-  catch (error_: any) {
+  if (!await requestInvite(token))
     resetCaptcha();
-    error.value = error_.message;
-    invite.value = undefined;
-  }
 }
 </script>
 
 <template>
-  <div class="px-4 md:px-12 xl:px-16">
-    <div
-      class="md:h-[294px] py-[5rem] flex flex-row items-center justify-between flex-wrap"
-    >
-      <div class="basis-full md:basis-auto">
-        <div class="text-h6 text-rui-primary">
-          {{ t('discord.chat') }}
-        </div>
-        <div class="text-h4 mt-[0.75rem]">
-          {{ t('discord.title') }}
-        </div>
-
-        <div v-show="!inviteLink">
-          {{ t('discord.description') }}
-        </div>
-        <div
-          v-if="inviteLink"
-          class="text-body-1 mt-[1.5rem]"
-        >
-          <i18n-t
-            tag="div"
-            scope="global"
-            keypath="discord.invite.link"
-          >
-            <template #link>
-              <a
-                :href="inviteLink"
-                target="_blank"
-                rel="noreferrer"
-                class="font-medium text-rui-light-primary hover:text-rui-light-primary-darker"
-              >
-                {{ inviteLink }}
-              </a>
-            </template>
-          </i18n-t>
-          <i18n-t
-            v-if="expiry"
-            tag="div"
-            scope="global"
-            keypath="discord.invite.expiry"
-          >
-            <template #expiry>
-              <span class="font-medium text-rui-text-secondary">
-                {{ expiry.toLocaleString() }}
-              </span>
-            </template>
-          </i18n-t>
-        </div>
-      </div>
-      <Recaptcha
-        v-if="!inviteLink"
-        class="basis-full md:basis-auto"
-        @error="onError()"
-        @expired="onExpired()"
-        @success="onCaptchaSuccess($event)"
-        @captcha-id="captchaId = $event"
+  <section
+    class="px-4 md:px-12 xl:px-16 py-16 md:py-20 grid gap-8 md:grid-cols-[1fr_auto] md:items-center"
+    aria-labelledby="discord-title"
+  >
+    <div>
+      <p class="text-overline uppercase text-rui-primary">
+        {{ t('discord.chat') }}
+      </p>
+      <h1
+        id="discord-title"
+        class="text-h4 md:text-h3 mt-1 text-rui-text"
+      >
+        {{ t('discord.title') }}
+      </h1>
+      <InviteResult
+        v-if="inviteLink"
+        :invite-link="inviteLink"
+        :expiry="expiry"
+      />
+      <p
+        v-else
+        class="text-body-1 mt-3 max-w-prose text-rui-text-secondary"
+      >
+        {{ t('discord.description') }}
+      </p>
+      <RuiAlert
+        v-if="error"
+        class="mt-6 max-w-prose"
+        type="error"
+        :title="t('discord.error.title')"
+        :description="t('discord.error.description', { message: error })"
       />
     </div>
-  </div>
+    <Recaptcha
+      v-if="!inviteLink"
+      @error="onError()"
+      @expired="onExpired()"
+      @success="onCaptchaSuccess($event)"
+      @captcha-id="captchaId = $event"
+    />
+  </section>
 </template>

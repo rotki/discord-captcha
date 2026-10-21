@@ -9,20 +9,20 @@ defineProps<{
 </script>
 
 <template>
-  <div
-    class="flex max-w-[35rem] items-start gap-[1rem] basis-full lg:basis-[47%]"
-  >
+  <li class="flex items-start gap-4">
     <div
-      class="flex w-[3rem] h-[3rem] p-[0.75rem] justify-center items-center shrink-0 bg-rui-primary rounded-[0.625rem]"
+      class="flex size-12 shrink-0 items-center justify-center rounded-rui-card bg-rui-primary text-rui-dark-text"
+      aria-hidden="true"
     >
-      <RuiIcon
-        :name="icon"
-        class="text-rui-dark-text"
-      />
+      <RuiIcon :name="icon" />
     </div>
-    <div class="self-stretch text-body-1 text-rui-text-secondary">
-      <span class="font-medium">{{ title }}</span>
-      <span class="ml-1">{{ description }}</span>
+    <div>
+      <h3 class="text-subtitle-1 text-rui-text">
+        {{ title }}
+      </h3>
+      <p class="text-body-1 mt-1 text-rui-text-secondary">
+        {{ description }}
+      </p>
     </div>
-  </div>
+  </li>
 </template>

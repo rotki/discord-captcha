@@ -20,25 +20,21 @@ const attrs = useAttrs();
 </script>
 
 <template>
-  <a
-    class="inline-flex"
+  <RuiButton
+    v-bind="{
+      variant: 'text',
+      ...attrs,
+    }"
+    tag="a"
     :href="to"
-    :target="external ? '_blank' : '_self'"
-    :rel="external ? 'noreferrer' : undefined"
+    :target="external ? '_blank' : undefined"
+    :rel="external ? 'noopener noreferrer' : undefined"
   >
-    <RuiButton
-      v-bind="{
-        variant: 'text',
-        type: 'button',
-        ...attrs,
-      }"
-    >
-      <slot>
-        {{ to }}
-      </slot>
-      <template #append>
-        <slot name="append" />
-      </template>
-    </RuiButton>
-  </a>
+    <slot>
+      {{ to }}
+    </slot>
+    <template #append>
+      <slot name="append" />
+    </template>
+  </RuiButton>
 </template>
