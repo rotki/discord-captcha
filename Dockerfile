@@ -11,7 +11,7 @@ ENV VITE_SITE_URL=${VITE_SITE_URL}
 RUN pnpm build
 
 # --- Build Go ---
-FROM golang:1.26-alpine AS go-build
+FROM golang:1.27.3-alpine AS go-build
 WORKDIR /build
 COPY bot/go.mod bot/go.sum ./
 RUN go mod download
