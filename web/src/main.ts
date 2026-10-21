@@ -6,8 +6,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue';
 import { brandIcons } from './brand-icons';
 import en from './locales/en.json';
-import '@rotki/ui-library/style.css';
-import '@fontsource/roboto/latin.css';
+import '@fontsource-variable/inter/opsz.css';
 import './assets/css/tailwind.css';
 
 const router = createRouter({
