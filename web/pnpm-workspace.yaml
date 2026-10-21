@@ -1,12 +1,12 @@
 blockExoticSubdeps: true
+
 minimumReleaseAge: 10080
+minimumReleaseAgeExcludePrune: true
 minimumReleaseAgeExclude:
   - '@rotki/ui-library'
   - '@rotki/eslint-config'
   - '@rotki/eslint-plugin'
-saveExact: true
-shellEmulator: true
-strictDepBuilds: true
+
 trustPolicy: no-downgrade
 trustPolicyExclude:
   # @rotki/ui-library pins this exact version. It is a hand-published backport on the
@@ -15,9 +15,18 @@ trustPolicyExclude:
   # account, matching GitHub release. Every repo that consumes ui-library carries the
   # same entry; it goes away once ui-library drops the dependency.
   - tailwind-merge@2.6.1
-allowBuilds:
-  '@parcel/watcher': true
-  esbuild: true
+
+shellEmulator: true
+strictDepBuilds: true
+saveExact: true
+
 overrides:
   chokidar: 5.0.0
   immutable: 5.1.9
+  # oxfmt 0.35, which eslint-plugin-format caps us at, pins tinypool 2.1.0
+  # (GHSA advisories fixed in 2.1.2).
+  oxfmt>tinypool: 2.1.2
+
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true

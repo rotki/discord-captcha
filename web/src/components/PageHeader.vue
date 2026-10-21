@@ -2,7 +2,10 @@
 import { computed } from 'vue';
 
 const siteUrl = import.meta.env.VITE_SITE_URL;
-const displayUrl = computed(() => siteUrl?.split('//')[1] ?? '');
+const displayUrl = computed<string>(() => {
+  const index = siteUrl?.indexOf('//') ?? -1;
+  return index === -1 ? '' : siteUrl.slice(index + 2);
+});
 </script>
 
 <template>
