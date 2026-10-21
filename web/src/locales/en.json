@@ -8,6 +8,8 @@
     "link": "Learn more at {link}",
     "chat": "Chat with us",
     "invite": {
+      "copy": "Copy invite link",
+      "copied": "Copied",
       "creating": "Creating your invite…",
       "join": "Join the Discord",
       "link": "Or open {link} directly.",

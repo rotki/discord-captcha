@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RuiButton, RuiIcon } from '@rotki/ui-library';
-import { computed } from 'vue';
+import { computed, onBeforeUnmount, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { inviteLink, expiry } = defineProps<{
@@ -15,6 +15,26 @@ const formattedExpiry = computed<string | undefined>(() => {
     return undefined;
   return new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(expiry);
 });
+
+const copied = shallowRef(false);
+let copiedTimer: ReturnType<typeof setTimeout> | undefined;
+
+async function copyLink(): Promise<void> {
+  try {
+    await navigator.clipboard.writeText(inviteLink);
+  }
+  catch {
+    // Clipboard access was refused; the link is still there to select by hand.
+    return;
+  }
+  copied.value = true;
+  clearTimeout(copiedTimer);
+  copiedTimer = setTimeout(() => {
+    copied.value = false;
+  }, 2000);
+}
+
+onBeforeUnmount(() => clearTimeout(copiedTimer));
 </script>
 
 <template>
@@ -49,6 +69,26 @@ const formattedExpiry = computed<string | undefined>(() => {
           >
             {{ inviteLink }}
           </a>
+          <RuiButton
+            variant="text"
+            icon
+            size="sm"
+            class="ml-1 align-middle"
+            :aria-label="copied ? t('discord.invite.copied') : t('discord.invite.copy')"
+            :title="copied ? t('discord.invite.copied') : t('discord.invite.copy')"
+            @click="copyLink()"
+          >
+            <RuiIcon
+              :name="copied ? 'lu-check' : 'lu-copy'"
+              size="16"
+            />
+          </RuiButton>
+          <span
+            class="sr-only"
+            aria-live="polite"
+          >
+            {{ copied ? t('discord.invite.copied') : '' }}
+          </span>
         </template>
       </i18n-t>
       <template v-if="formattedExpiry">
