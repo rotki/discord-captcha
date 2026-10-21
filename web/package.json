@@ -18,24 +18,24 @@
     "@vueuse/core": "14.4.0",
     "@vueuse/math": "14.4.0",
     "@vueuse/shared": "14.4.0",
-    "vue": "3.5.41",
-    "vue-i18n": "11.4.8",
-    "vue-router": "5.2.0"
+    "vue": "3.5.44",
+    "vue-i18n": "11.4.14",
+    "vue-router": "5.4.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "21.2.1",
-    "@commitlint/config-conventional": "21.2.0",
+    "@commitlint/cli": "21.2.3",
+    "@commitlint/config-conventional": "21.2.3",
     "@rotki/eslint-config": "7.0.0",
     "@rotki/eslint-plugin": "1.5.1",
-    "@vitejs/plugin-vue": "6.0.8",
-    "autoprefixer": "10.5.4",
-    "eslint": "10.8.1",
+    "@vitejs/plugin-vue": "6.0.10",
+    "autoprefixer": "10.6.1",
+    "eslint": "10.12.0",
     "fast-glob": "3.3.3",
-    "postcss": "8.5.26",
+    "postcss": "8.5.30",
     "tailwindcss": "3.4.19",
     "typescript": "5.9.3",
-    "vite": "8.2.1",
-    "vue-tsc": "3.3.9"
+    "vite": "8.3.4",
+    "vue-tsc": "3.3.13"
   },
   "engines": {
     "node": ">=24 <25",
