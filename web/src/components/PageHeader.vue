@@ -2,9 +2,34 @@
 import { computed } from 'vue';
 
 const siteUrl = import.meta.env.VITE_SITE_URL;
+
+const parsedUrl = computed<URL | undefined>(() => {
+  if (!siteUrl)
+    return undefined;
+  try {
+    return new URL(siteUrl);
+  }
+  catch {
+    return undefined;
+  }
+});
+
 const displayUrl = computed<string>(() => {
-  const index = siteUrl?.indexOf('//') ?? -1;
-  return index === -1 ? '' : siteUrl.slice(index + 2);
+  if (!parsedUrl.value)
+    return '';
+  const { host, pathname } = parsedUrl.value;
+  return `${host}${pathname.replace(/\/$/, '')}`;
+});
+
+// rotki.com attributes visits by these parameters, so a click from here is not counted as direct traffic.
+const linkUrl = computed<string | undefined>(() => {
+  if (!parsedUrl.value)
+    return undefined;
+  const url = new URL(parsedUrl.value);
+  url.searchParams.set('utm_source', window.location.hostname);
+  url.searchParams.set('utm_medium', 'referral');
+  url.searchParams.set('utm_content', 'header');
+  return url.toString();
 });
 </script>
 
@@ -19,9 +44,9 @@ const displayUrl = computed<string>(() => {
     >
       <template #link>
         <a
-          :href="siteUrl"
+          :href="linkUrl"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener"
           class="ml-1 font-medium underline underline-offset-2 hover:text-rui-grey-200"
         >
           {{ displayUrl }}
