@@ -22,6 +22,8 @@ ARG VERSION=dev
 RUN CGO_ENABLED=0 GOOS=linux go build \
     -ldflags="-s -w -X github.com/rotki/discord-captcha/internal/version.Version=${VERSION} -X github.com/rotki/discord-captcha/internal/version.GitSHA=${GIT_SHA}" \
     -o server ./cmd
+# scratch has no mkdir, so the data directory is created here and copied in owned by the runtime user
+RUN mkdir -p /out/data/invites
 
 # --- Final ---
 FROM scratch
@@ -41,6 +43,9 @@ LABEL org.opencontainers.image.created="${BUILD_DATE}"
 
 COPY --from=go-build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=go-build /build/server /server
+COPY --from=go-build --chown=65532:65532 /out/data /data
+# Numeric because scratch has no /etc/passwd
+USER 65532:65532
 EXPOSE 4000
 VOLUME /data
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
