@@ -8,6 +8,19 @@
     "helpers:pinGitHubActionDigests"
   ],
   "minimumReleaseAge": "7 days",
+  "customManagers": [
+    {
+      // Tool versions in workflows that no built-in manager picks up: a
+      // `# renovate:` comment above a `key: value` line, and `npx pkg@x.y.z`.
+      "customType": "regex",
+      "managerFilePatterns": ["/^\\.github/workflows/[^/]+\\.ya?ml$/"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>\\S+)\\s+[\\w-]+:\\s*(?<currentValue>\\S+)",
+        "npx (?<depName>[\\w@./-]+)@(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}npm{{/if}}"
+    }
+  ],
   "packageRules": [
     {
       "allowedVersions": "/^(24)\\./",
