@@ -12,7 +12,7 @@
       "copied": "Copied",
       "creating": "Creating your invite…",
       "join": "Join the Discord",
-      "link": "Or open {link} directly.",
+      "link": "Or use the invite link:",
       "expiry": "The invite is valid until {expiry}."
     },
     "error": {

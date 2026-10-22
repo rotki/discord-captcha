@@ -55,53 +55,49 @@ onBeforeUnmount(() => clearTimeout(copiedTimer));
         />
       </template>
     </RuiButton>
-    <p class="text-body-2 text-rui-text-secondary">
+    <div class="max-w-full text-body-2 text-rui-text-secondary">
+      <p>{{ t('discord.invite.link') }}</p>
+      <div class="flex max-w-full items-center gap-1">
+        <a
+          :href="inviteLink"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="min-w-0 break-all font-medium text-rui-primary underline underline-offset-2 hover:text-rui-primary-darker"
+        >
+          {{ inviteLink }}
+        </a>
+        <RuiButton
+          variant="text"
+          icon
+          size="sm"
+          class="shrink-0"
+          :aria-label="copied ? t('discord.invite.copied') : t('discord.invite.copy')"
+          :title="copied ? t('discord.invite.copied') : t('discord.invite.copy')"
+          @click="copyLink()"
+        >
+          <RuiIcon
+            :name="copied ? 'lu-check' : 'lu-copy'"
+            size="16"
+          />
+        </RuiButton>
+        <span
+          class="sr-only"
+          aria-live="polite"
+        >
+          {{ copied ? t('discord.invite.copied') : '' }}
+        </span>
+      </div>
       <i18n-t
+        v-if="formattedExpiry"
+        tag="p"
+        class="mt-1"
         scope="global"
-        keypath="discord.invite.link"
+        keypath="discord.invite.expiry"
       >
-        <template #link>
-          <a
-            :href="inviteLink"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="font-medium text-rui-primary underline underline-offset-2 break-all hover:text-rui-primary-darker"
-          >
-            {{ inviteLink }}
-          </a>
-          <RuiButton
-            variant="text"
-            icon
-            size="sm"
-            class="ml-1 align-middle"
-            :aria-label="copied ? t('discord.invite.copied') : t('discord.invite.copy')"
-            :title="copied ? t('discord.invite.copied') : t('discord.invite.copy')"
-            @click="copyLink()"
-          >
-            <RuiIcon
-              :name="copied ? 'lu-check' : 'lu-copy'"
-              size="16"
-            />
-          </RuiButton>
-          <span
-            class="sr-only"
-            aria-live="polite"
-          >
-            {{ copied ? t('discord.invite.copied') : '' }}
-          </span>
+        <template #expiry>
+          <span class="font-medium text-rui-text">{{ formattedExpiry }}</span>
         </template>
       </i18n-t>
-      <template v-if="formattedExpiry">
-        {{ ' ' }}
-        <i18n-t
-          scope="global"
-          keypath="discord.invite.expiry"
-        >
-          <template #expiry>
-            <span class="font-medium text-rui-text">{{ formattedExpiry }}</span>
-          </template>
-        </i18n-t>
-      </template>
-    </p>
+    </div>
   </div>
 </template>
