@@ -20,7 +20,7 @@ async function onCaptchaSuccess(token: string): Promise<void> {
 
 <template>
   <section
-    class="px-4 md:px-12 xl:px-16 py-16 md:py-20 grid gap-8 md:grid-cols-[1fr_auto] md:items-center"
+    class="px-4 md:px-12 xl:px-16 py-16 md:py-20 grid gap-8 lg:gap-12 lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-center"
     aria-labelledby="discord-title"
   >
     <div>
@@ -33,45 +33,60 @@ async function onCaptchaSuccess(token: string): Promise<void> {
       >
         {{ t('discord.title') }}
       </h1>
+      <p class="text-body-1 mt-3 max-w-prose text-rui-text-secondary">
+        {{ t('discord.description') }}
+      </p>
+    </div>
+    <div
+      class="sm:rounded-rui-card sm:border sm:border-rui-divider sm:bg-rui-surface sm:p-6"
+      aria-labelledby="discord-step-title"
+      role="region"
+    >
+      <h2
+        id="discord-step-title"
+        class="text-h6 text-rui-text"
+        aria-live="polite"
+      >
+        {{ inviteLink ? t('discord.step.ready') : t('discord.step.verify') }}
+      </h2>
       <InviteResult
         v-if="inviteLink"
         :invite-link="inviteLink"
         :expiry="expiry"
       />
-      <p
-        v-else-if="loading"
-        class="text-body-1 mt-3 flex items-center gap-2 text-rui-text-secondary"
-        role="status"
-      >
-        <RuiProgress
-          variant="indeterminate"
-          circular
-          color="primary"
-          size="18"
-          thickness="2"
+      <template v-else>
+        <p class="text-body-2 mt-1 text-rui-text-secondary">
+          {{ t('discord.step.verify_hint') }}
+        </p>
+        <Recaptcha
+          class="mt-4"
+          @error="onError()"
+          @expired="onExpired()"
+          @success="onCaptchaSuccess($event)"
+          @captcha-id="captchaId = $event"
         />
-        {{ t('discord.invite.creating') }}
-      </p>
-      <p
-        v-else
-        class="text-body-1 mt-3 max-w-prose text-rui-text-secondary"
-      >
-        {{ t('discord.description') }}
-      </p>
-      <RuiAlert
-        v-if="error"
-        class="mt-6 max-w-prose"
-        type="error"
-        :title="t('discord.error.title')"
-        :description="t('discord.error.description', { message: error })"
-      />
+        <p
+          v-if="loading"
+          class="text-body-2 mt-3 flex items-center gap-2 text-rui-text-secondary"
+          role="status"
+        >
+          <RuiProgress
+            variant="indeterminate"
+            circular
+            color="primary"
+            size="16"
+            thickness="2"
+          />
+          {{ t('discord.invite.creating') }}
+        </p>
+        <RuiAlert
+          v-if="error"
+          class="mt-4"
+          type="error"
+          :title="t('discord.error.title')"
+          :description="t('discord.error.description', { message: error })"
+        />
+      </template>
     </div>
-    <Recaptcha
-      v-if="!inviteLink"
-      @error="onError()"
-      @expired="onExpired()"
-      @success="onCaptchaSuccess($event)"
-      @captcha-id="captchaId = $event"
-    />
   </section>
 </template>

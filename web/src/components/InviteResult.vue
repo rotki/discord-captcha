@@ -38,7 +38,7 @@ onBeforeUnmount(() => clearTimeout(copiedTimer));
 </script>
 
 <template>
-  <div class="mt-6 flex flex-col items-start gap-3">
+  <div class="mt-4 flex flex-col items-start gap-3">
     <RuiButton
       tag="a"
       color="primary"

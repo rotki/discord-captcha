@@ -1,12 +1,14 @@
 {
-  "actions": {
-    "go_back_home": "Go back home"
-  },
   "discord": {
     "title": "Join rotki's Discord",
-    "description": "Solve the captcha to get an invite to rotki's Discord.",
+    "description": "Ask questions, report bugs, suggest features and talk with the rotki team and community.",
     "link": "Learn more at {link}",
     "chat": "Chat with us",
+    "step": {
+      "verify": "Verify you're human",
+      "verify_hint": "Get a single-use invite, valid for 30 minutes.",
+      "ready": "Your invite is ready"
+    },
     "invite": {
       "copy": "Copy invite link",
       "copied": "Copied",
