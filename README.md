@@ -68,6 +68,14 @@ Copy `.env.example` to `.env` and fill in the values:
 `VITE_`-prefixed variables are only needed at frontend build time.
 If `REDIS_HOST` is not set, the filesystem store (`/data/invites`) is used.
 
+### Secrets from files
+
+`DISCORD_TOKEN`, `RECAPTCHA_SECRET` and `REDIS_PASSWORD` can instead be read
+from a file by setting `<NAME>_FILE`, for example
+`DISCORD_TOKEN_FILE=/run/secrets/discord_token` with Docker secrets. A trailing
+newline in the file is ignored. Setting both `<NAME>` and `<NAME>_FILE`, or
+pointing `<NAME>_FILE` at an empty file, is an error.
+
 ## Development
 
 ### Prerequisites
