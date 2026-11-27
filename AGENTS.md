@@ -202,8 +202,21 @@ commit: the tag goes on the `main` commit being released.
 3. `.github/workflows/release.yml` creates the GitHub release with notes from `changelogithub`.
 4. Verify with `gh release view vYYYY.M.N -R rotki/discord-captcha`.
 
-CI builds the image on every push but does not publish it. Deploying a release happens outside this
-repository and is not covered here; ask a maintainer.
+### Deploying
+
+CI builds the image on every push but does not publish it. Deployments run from rotki's
+infrastructure, outside this repository, and only a maintainer with access to it runs them. Agents
+do not deploy.
+
+1. Release first (above), so the deployment builds a tagged commit on `main`.
+2. Ask a maintainer to deploy the tag to production. There is no staging deployment of the bot.
+   The deployment builds the image from that tag on the server and updates the running bot.
+3. Check the deployed bot: it is online in Discord, the captcha page loads, and a new member can
+   complete verification.
+
+Production passes the bot's credentials as Docker secrets, mounted under `/run/secrets/` and read
+through the `<NAME>_FILE` variables. A new secret therefore needs its `_FILE` variant here before it
+can be deployed, and a build older than v2026.10.1, which added them, starts without credentials.
 
 ## Repository settings
 
